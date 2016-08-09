@@ -1,0 +1,32 @@
+#navLogo {
+    width: 35px;
+    height: 19px;
+}
+
+#homeHeader {
+    background-image: url("/statics/network.png");
+}
+
+#hhWelcomeMain {
+    color: #fff;
+    font-size: 3.25em;
+    line-height: 1em;
+    font-weight: bold;
+}
+
+.loginInput {
+    width: 100%;
+}
+
+#hhWelcomeSub {
+    color: #fff;
+    line-height: 1em;
+}
+
+#hhWelcomeMainDiv {
+    padding-top: 10%;
+}
+
+#loginDiv {
+    padding-top: 15%;
+}

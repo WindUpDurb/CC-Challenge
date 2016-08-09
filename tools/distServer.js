@@ -11,7 +11,7 @@ import mongoose from "mongoose";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const MONGOURL = process.env.MONGODB_URI || "mongodb://localhost/example";
+const MONGOURL = process.env.MONGODB_URI || "mongodb://localhost/CC-Challenge";
 
 mongoose.connect(MONGOURL, function (error) {
     console.log(error || `Connected to MongoDB at ${MONGOURL}`);

@@ -29,8 +29,7 @@ class App extends React.Component {
 
 App.propTypes = {
     children: PropTypes.object.isRequired,
-    loading: PropTypes.number,
-    UserActions: PropTypes.object.isRequired
+    loading: PropTypes.number
 };
 
 function mapStateToProps(state, ownProps) {

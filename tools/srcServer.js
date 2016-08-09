@@ -11,9 +11,8 @@ import path from "path";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-const MONGOURL = process.env.MONGODB_URI || "mongodb://localhost/example";
+const MONGOURL = process.env.MONGODB_URI || "mongodb://localhost/CC-Challenge";
 const compiler = webpack(config);
-// const pathToStatic = path.join(__dirname);
 /* eslint-disable no-console */
 
 

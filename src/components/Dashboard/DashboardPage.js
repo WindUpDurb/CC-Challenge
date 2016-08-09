@@ -7,7 +7,7 @@ import {NavbarPresentation} from "../common/NavbarPresentation";
 import {DashboardHeader} from "./DashboardHeader";
 import {ListedJob} from "../common/ListedJob";
 import {JobListingFilter} from "./JobListingFilter";
-import {searchThroughJobs} from "../../actions/functionTools";
+import {filterJobs} from "../../actions/functionTools";
 import * as UserActions from "../../actions/UserActions";
 import * as JobListActions from "../../actions/JobListActions";
 
@@ -17,22 +17,34 @@ class DashboardPage extends React.Component {
         super(props);
 
         this.state = {
-            filteredJobs: null
+            filteredJobs: null,
+            filter: {
+                searchParams: null,
+                partTimeOnly: false,
+                fullTimeOnly: false
+            }
         };
         
-        this.updateSearchParams = this.updateSearchParams.bind(this);
+        this.updateFilter = this.updateFilter.bind(this);
     }
 
     componentWillMount() {
         this.props.JobListActions.fetchJobList();
     }
-    
-    updateSearchParams(event) {
+
+    updateFilter(event) {
         let jobListingCopy, filteredJobs;
-        let searchParams = event.target.value;
+        let searchParams = this.state.filter.searchParams;
+        let partTimeOnly = this.state.filter.partTimeOnly;
+        let fullTimeOnly = this.state.filter.fullTimeOnly;
+        if (event.target.name === "searchParams") searchParams = event.target.value;
+        if (event.target.name === "partTimeOnly") partTimeOnly = event.target.checked;
+        if (event.target.name === "fullTimeOnly") fullTimeOnly = event.target.checked;
+        let toSet = {searchParams, partTimeOnly, fullTimeOnly};
+        this.setState({filter: toSet});
         if (this.props.jobListings.length) jobListingCopy = [...this.props.jobListings];
         if (jobListingCopy) {
-            filteredJobs = searchThroughJobs(searchParams, jobListingCopy);
+            filteredJobs = filterJobs(searchParams, partTimeOnly, fullTimeOnly, jobListingCopy);
             this.setState({filteredJobs});
         }
     }
@@ -59,8 +71,8 @@ class DashboardPage extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-md-3">
-                            <JobListingFilter 
-                                updateSearchParams={this.updateSearchParams}/>
+                            <JobListingFilter
+                                updateFilter={this.updateFilter}/>
                         </div>
                         <div className="col-md-6">
                             {jobListings}

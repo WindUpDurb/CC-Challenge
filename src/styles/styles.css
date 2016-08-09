@@ -18,6 +18,10 @@
     width: 100%;
 }
 
+#profileCardRow {
+    padding-top: 8%;
+}
+
 #hhWelcomeSub {
     color: #fff;
     line-height: 1em;
@@ -29,4 +33,23 @@
 
 #loginDiv {
     padding-top: 15%;
+}
+
+.dashboardSectionSelect {
+    font-size: 1.9em;
+    color: #777777;
+}
+
+#dashboardActiveColor {
+    color: #c34d8e;
+}
+
+#dashboardHeader {
+    background-color: #428bca;
+    background-image: url("https://www.transparenttextures.com/patterns/ag-square.png");
+    height: 400px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
 }

@@ -3,6 +3,8 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
+import {NavbarPresentation} from "../common/NavbarPresentation";
+import {DashboardHeader} from "./DashboardHeader";
 import * as UserActions from "../../actions/UserActions";
 import * as JobListActions from "../../actions/JobListActions";
 
@@ -13,13 +15,24 @@ class DashboardPage extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this.props)
         this.props.JobListActions.fetchJobList();
     }
 
     render() {
         return (
-            <div>Stuff</div>
+            <div>
+                <NavbarPresentation />
+                <DashboardHeader />
+                <div className="container">
+                    <div className="row">
+                        <div style={{borderBottom: "1px solid #E0E0E0"}} className="col-md-8">
+                            <span id="dashboardActiveColor" className="dashboardSectionSelect">Jobs</span>
+                            <span style={{marginLeft: "5px"}} className="dashboardSectionSelect">Profile</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         );
     }
 }

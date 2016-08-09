@@ -40,7 +40,8 @@ export function submitSignInForm(signInForm) {
             })
             .then(parsedResponse => {
                 if (!parsedResponse.error) {
-                    sessionStorage.setItem("testLogin", parsedResponse);
+                    //stringify in the previous block
+                    sessionStorage.setItem("testLogin", JSON.stringify(parsedResponse));
                     dispatch(dispatchSignInSuccess(parsedResponse));
                 }
             })

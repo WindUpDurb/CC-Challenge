@@ -14,7 +14,7 @@ import "../node_modules/toastr/build/toastr.min.css";
 
 const store = configureStore();
 
-//store.dispatch({type: "CHECK_ACTIVE_USER"});
+store.dispatch({type: "CHECK_ACTIVE_USER"});
 
 render(
     <Provider store={store}>

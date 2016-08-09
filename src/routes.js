@@ -4,6 +4,7 @@ import React from "react";
 import { Route, IndexRedirect } from "react-router";
 import App from "./components/App";
 import HomePage from "./components/Home/HomePage";
+import DashboardPage from "./components/Dashboard/DashboardPage";
 import * as types from "./actions/actionTypes";
 import toastr from "toastr";
 
@@ -30,6 +31,7 @@ export const generateRoutes = (store) => {
         <Route path="/" component={App}>
             <IndexRedirect to="/home"/>
             <Route path="/home" component={HomePage} />
+            <Route path="/dashboard" component={DashboardPage} />
         </Route>
     );
 

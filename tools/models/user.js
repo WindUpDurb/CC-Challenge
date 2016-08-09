@@ -2,11 +2,6 @@
 
 let mongoose = require("mongoose");
 let bcrypt = require("bcrypt");
-let jwt = require("json-web-token");
-let moment = require("moment");
-
-let JWT_SECRET = process.env.JWT_SECRET;
-
 
 let userSchema = new mongoose.Schema({
     email: {type: String},

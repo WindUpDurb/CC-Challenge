@@ -35,13 +35,37 @@
     padding-top: 15%;
 }
 
+.jobListingRow {
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.lightGreyBB {
+    border-bottom: 1px solid #E0E0E0
+}
+
+#searchPanel {
+    margin-top: 3%;
+}
+
 .dashboardSectionSelect {
     font-size: 1.9em;
     color: #777777;
+    cursor: pointer;
 }
 
 #dashboardActiveColor {
     color: #c34d8e;
+}
+
+.matchScore {
+    padding: 2px;
+}
+
+.bg-plain {
+    background-color: #EEEEEE;
+    padding: 2px;
+    margin-left: 5px;
 }
 
 #dashboardHeader {

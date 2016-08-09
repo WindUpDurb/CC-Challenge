@@ -1,13 +1,13 @@
 "use strict";
 
 import { combineReducers } from "redux";
-import jobPostsReducer from "./jobPostsReducer";
+import jobListingsReducer from "./jobListingsReducer";
 import requestStatusReducer from "./requestsInProgress";
 import userReducer from "./userReducer";
 
 const rootReducer = combineReducers({
 
-    jobPosts: jobPostsReducer,
+    jobListings: jobListingsReducer,
     requestsInProgress: requestStatusReducer,
     activeUser: userReducer
 });

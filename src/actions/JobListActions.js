@@ -1,5 +1,13 @@
 "use strict";
 
+import * as types from "./actionTypes";
+
+export function dispatchJobListings(jobListings) {
+    return {
+        type: types.JOB_LISTINGS_RECEIVED,
+        jobListings
+    };
+}
 
 export function fetchJobList() {
     return function (dispatch) {
@@ -8,7 +16,7 @@ export function fetchJobList() {
                 return response.json();
             })
             .then(parsedResponse => {
-                console.log("Here: ", parsedResponse);
+                dispatch(dispatchJobListings(parsedResponse));
             })
             .catch(error => {
                 console.log("Error: ", error);

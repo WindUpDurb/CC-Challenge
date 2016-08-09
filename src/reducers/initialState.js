@@ -1,7 +1,7 @@
 "use strict";
 //in this file, will centralize declarations about what is in state
 
-export const jobPosts = null;
+export const jobListings = null;
 
 export const requestsInProgress = 0;
 

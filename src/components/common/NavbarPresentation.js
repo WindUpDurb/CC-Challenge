@@ -6,7 +6,7 @@ import {Link} from "react-router";
 export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
     if (!activeUser) {
         return (
-            <nav className="navbar navbar-default">
+            <nav id="nav" className="navbar navbar-default">
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -15,10 +15,10 @@ export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
                             <span className="icon-bar"/>
                             <span className="icon-bar"/>
                         </button>
-                        <a className="navbar-brand" href="#">
+                        <Link to="home" style={{width: "300px"}} className="navbar-brand" href="#">
                             <img id="navLogo" src="/statics/logo.png"/>
                             <span>Covalent</span><span>Careers</span>
-                        </a>
+                        </Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -31,7 +31,7 @@ export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
         );
     } else {
         return (
-            <nav className="navbar navbar-default">
+            <nav id="nav" className="navbar navbar-default">
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -40,10 +40,10 @@ export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
                             <span className="icon-bar"/>
                             <span className="icon-bar"/>
                         </button>
-                        <a className="navbar-brand" href="#">
+                        <Link to="home" style={{width: "300px"}} className="navbar-brand" href="#">
                             <img id="navLogo" src="/statics/logo.png"/>
                             <span>Covalent</span><span>Careers</span>
-                        </a>
+                        </Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

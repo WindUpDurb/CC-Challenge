@@ -9,6 +9,9 @@ export const LogInForm = ({signIn, updateLoginForm}) => {
             <div className="well col-md-5 col-md-offset-1">
                 <div className="row">
                     <div className="col-sm-10 col-sm-offset-1">
+                        <div id="loginText" className="text-center">
+                            <h3>Login</h3>
+                        </div>
                         <div className="input-group input-group-lg">
                             <span className="input-group-addon" id="sizing-addon1">@</span>
                             <input
@@ -19,6 +22,7 @@ export const LogInForm = ({signIn, updateLoginForm}) => {
                                 placeholder="Email"
                                 aria-describedby="sizing-addon1"/>
                         </div>
+                        <br/>
                         <div className="input-group input-group-lg">
                             <span className="input-group-addon" id="sizing-addon1">@</span>
                             <input
@@ -29,9 +33,9 @@ export const LogInForm = ({signIn, updateLoginForm}) => {
                                 placeholder="Password"
                                 aria-describedby="sizing-addon1"/>
                         </div>
-                    </div>
-                    <div className="text-center">
-                        <button type="button" onClick={signIn} className="btn btn-success btn-lg">Login</button>
+                        <div id="loginButtonDiv" className="text-center">
+                            <button type="button" onClick={signIn} className="btn btn-success btn-lg">Login</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {HomeHeader} from "./HomeHeader";
+import {SubHomeHeaderSection} from "./SubHeaderSection";
 import {bindActionCreators} from "redux";
 import * as UserActions from "../../actions/UserActions";
 import {NavbarPresentation} from "../common/NavbarPresentation";
@@ -30,6 +31,7 @@ class HomePage extends React.Component {
 
     signIn() {
         this.props.UserActions.submitSignInForm(this.state.signInForm);
+        
     }
 
     signOut() {
@@ -52,6 +54,7 @@ class HomePage extends React.Component {
                     updateLoginForm={this.updateLoginForm}
                     signIn={this.signIn}
                     signInState={this.state.signInState}/>
+                <SubHomeHeaderSection/>
             </div>
         );
     }

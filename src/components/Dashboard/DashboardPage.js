@@ -7,6 +7,7 @@ import {NavbarPresentation} from "../common/NavbarPresentation";
 import {DashboardHeader} from "./DashboardHeader";
 import {ListedJob} from "../common/ListedJob";
 import {JobListingFilter} from "./JobListingFilter";
+import {NoListings} from "./NoListings";
 import {filterJobs} from "../../actions/functionTools";
 import * as UserActions from "../../actions/UserActions";
 import * as JobListActions from "../../actions/JobListActions";
@@ -22,14 +23,21 @@ class DashboardPage extends React.Component {
                 searchParams: null,
                 partTimeOnly: false,
                 fullTimeOnly: false
-            }
+            },
+            showSection: "jobs"
         };
         
         this.updateFilter = this.updateFilter.bind(this);
+        this.signOut = this.signOut.bind(this);
     }
 
     componentWillMount() {
         this.props.JobListActions.fetchJobList();
+    }
+
+
+    signOut() {
+        this.props.UserActions.signOut();
     }
 
     updateFilter(event) {
@@ -50,32 +58,34 @@ class DashboardPage extends React.Component {
     }
 
     render() {
-        let jobListings;
+        let jobListings, noListings;
         if (!this.state.filteredJobs && this.props.jobListings) jobListings = this.props.jobListings.map((job, index) => {
             return <ListedJob job={job} key={index}/>;
         });
         if (this.state.filteredJobs && this.props.jobListings) jobListings = this.state.filteredJobs.map((job, index) => {
             return <ListedJob job={job} key={index}/>;
         });
+        if (jobListings && jobListings.length === 0) noListings = <NoListings/>;
         return (
             <div>
-                <NavbarPresentation />
+                <NavbarPresentation
+                    signOut={this.signOut}
+                    activeUser={this.props.activeUser}/>
                 <DashboardHeader />
                 <div className="container">
-                    <div className="row">
-                        <div className="lightGreyBB col-md-8">
-                            <span>Your Career Dashboard</span>
-                            <span id="dashboardActiveColor" className="dashboardSectionSelect">Jobs</span>
-                            <span style={{marginLeft: "5px"}} className="dashboardSectionSelect">Profile</span>
+                    <div id="dashboardHeadingRow" className="row">
+                        <div className="lightGreyBB col-md-9">
+                            <span id="dashboardHeading">Your Career Dashboard</span>
                         </div>
                     </div>
+                    
                     <div className="row">
                         <div className="col-md-3">
                             <JobListingFilter
                                 updateFilter={this.updateFilter}/>
                         </div>
                         <div className="col-md-6">
-                            {jobListings}
+                            {noListings || jobListings}
                         </div>
                     </div>
                 </div>
@@ -86,20 +96,24 @@ class DashboardPage extends React.Component {
 
 DashboardPage.propTypes = {
     JobListActions: PropTypes.object,
-    jobListings: PropTypes.array
+    UserActions: PropTypes.object,
+    jobListings: PropTypes.array,
+    activeUser: PropTypes.bool
 };
 
 function mapStateToProps(state, ownProps) {
     let jobListings;
     if (state.jobListings) jobListings = [...state.jobListings];
     return {
-        jobListings
+        jobListings,
+        activeUser: !!state.activeUser
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        JobListActions: bindActionCreators(JobListActions, dispatch)
+        JobListActions: bindActionCreators(JobListActions, dispatch),
+        UserActions: bindActionCreators(UserActions, dispatch)
     };
 }
 

@@ -1,6 +1,7 @@
 "use strict";
 
 import * as types from "./actionTypes";
+import {browserHistory} from "react-router";
 
 export function dispatchSignInSuccess(activeUser) {
     return {
@@ -19,6 +20,7 @@ export function signOut() {
     return function (dispatch) {
         sessionStorage.removeItem("testLogin");
         dispatch(dispatchSignOut());
+        browserHistory.push("/");
     };
 }
 

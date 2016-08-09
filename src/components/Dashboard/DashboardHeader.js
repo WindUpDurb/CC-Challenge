@@ -1,6 +1,7 @@
 "use strict";
 
 import React, {PropTypes} from "react";
+import {ProfileCard} from "../common/ProfileCard";
 
 export const DashboardHeader = () => {
     
@@ -8,17 +9,8 @@ export const DashboardHeader = () => {
         <div id="dashboardHeader">
             <div className="container">
                 <div id="profileCardRow" className="row">
-                    <div className="well col-md-offset-2 col-md-3">
-                        <div className="text-center">
-                            <img src="https://covalentcareers.com/media/uploads/defaults/profile_page_title.png"/>
-                            <br/>
-                            <br/>
-                            <span>John Doe</span>
-                            <br/>
-                            <span>Status: </span>
-                            <br/>
-                            <span>Somewhere, CA, USA</span>
-                        </div>
+                    <div className="well col-md-offset-3 col-md-4">
+                        <ProfileCard/>
                     </div>
                 </div>
             </div>

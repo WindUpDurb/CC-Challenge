@@ -12,24 +12,24 @@ export const DashboardResourcesSection = ({videoLink, showVideo, changeMediaSect
         blogResources.map((blog, index) => <BlogCard key={index} blog={blog} />)
     );
     if (!videoLink && currentMediaSection === "blog") currentSection = (
-        <div className="col-md-5">
+        <div className="col-sm-7 col-md-5">
             {blogCollection}
         </div>
     );
     if (!videoLink && currentMediaSection === "videoSelect") currentSection = (
-        <div className="col-md-4">
+        <div className="col-sm-7 col-md-4">
             <VideoSection
                 showVideo={showVideo}/>
         </div>
     );
     if (videoLink) currentSection = (
-        <div className="col-md-7">
+        <div className="col-sm-8 col-md-7">
             <YouTubeVideo link={videoLink}/>
         </div>
     );
     return (
         <div className="row">
-            <div className="col-md-3">
+            <div className="col-sm-4 col-md-3">
                 <DashboardResourcesMediaSelect changeMediaSection={changeMediaSection}/>
             </div>
             {currentSection}

@@ -9,7 +9,7 @@ export const DashboardHeader = ({changeSection}) => {
         <div id="dashboardHeader">
             <div className="container">
                 <div id="profileCardRow" className="row">
-                    <div id="profileCard" className="well col-md-offset-3 col-md-4">
+                    <div id="profileCard" className="well col-sm-6 col-sm-offset-2 col-md-offset-3 col-md-4">
                         <ProfileCard
                             changeSection={changeSection}/>
                     </div>

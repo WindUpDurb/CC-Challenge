@@ -7,10 +7,10 @@ export const SubHomeHeaderSection = () => {
     return (
         <div className="container">
             <div id="homeSubHeaderRow" className="row">
-                <div className="col-md-5">
+                <div className="col-sm-10 col-md-5">
                     <img className="img-responsive" src="/statics/2-optometry-resumes.png"/>
                 </div>
-                <div className="col-md-6 col-md-offset-1">
+                <div className="col-sm-10 col-md-6 col-md-offset-1">
                     <h1>Find incredible eyecare jobs</h1>
                     <br/>
                     <p>Discover the best optometrist and optical staff opportunities in your area. Take advantage of unique match-making technology that scores each job based on how well it suits what you're looking for!</p>

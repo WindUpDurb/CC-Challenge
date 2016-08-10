@@ -13,7 +13,9 @@ export const LogInForm = ({signIn, updateLoginForm}) => {
                             <h3>Login</h3>
                         </div>
                         <div className="input-group input-group-lg">
-                            <span className="input-group-addon" id="sizing-addon1">@</span>
+                            <span className="input-group-addon" id="sizing-addon1">
+                                <img src="/statics/mail.png" />
+                            </span>
                             <input
                                 onChange={updateLoginForm}
                                 name="email"
@@ -24,7 +26,9 @@ export const LogInForm = ({signIn, updateLoginForm}) => {
                         </div>
                         <br/>
                         <div className="input-group input-group-lg">
-                            <span className="input-group-addon" id="sizing-addon1">@</span>
+                            <span className="input-group-addon" id="sizing-addon1">
+                                <img src="/statics/key.png" />
+                            </span>
                             <input
                                 onChange={updateLoginForm}
                                 name="password"

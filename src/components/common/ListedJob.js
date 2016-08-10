@@ -22,10 +22,10 @@ export const ListedJob = ({job}) => {
 
     return (
         <div className="row jobListingRow card lightGreyBB">
-            <div className="col-md-2">
+            <div className="col-sm-3 col-md-2">
                 <img className="img-responsive img-rounded" src={`/statics/${image}`}/>
             </div>
-            <div className="col-md-8">
+            <div className="col-sm-9 col-md-8">
                 <span>{postingTitle}</span>
                 <br/>
                 <span>{location}</span>

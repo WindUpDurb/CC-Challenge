@@ -16,11 +16,11 @@ export const DashboardJobSection = ({filteredJobs, jobListings, updateFilter}) =
     if (jobListings && jobListings.length === 0) noListings = <NoListings/>;
     return (
         <div className="row">
-            <div className="col-md-3">
+            <div className="col-sm-5 col-md-3">
                 <JobListingFilter
                     updateFilter={updateFilter}/>
             </div>
-            <div className="col-md-6">
+            <div className="col-sm-7 col-md-6">
                 {noListings || jobListings}
             </div>
         </div>

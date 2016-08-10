@@ -55,7 +55,7 @@ let initialData = [
     },
     {
         id: 4,
-        posted_date: "2015-08-05T05:00:00.000Z",
+        posted_date: "2016-08-05T05:00:00.000Z",
         organization: "Mott Optical",
         location: "San Diego, CA",
         applicants: 10,
@@ -66,7 +66,7 @@ let initialData = [
     },
     {
         id: 5,
-        posted_date: "2015-08-04T05:00:00.000Z",
+        posted_date: "2016-08-04T05:00:00.000Z",
         organization: "Mott Optical",
         location: "San Diego, CA",
         applicants: 8,
@@ -78,7 +78,6 @@ let initialData = [
 ];
 
 /*for (let jobPost of initialData) {
-    console.log(jobPost)
     Job.create(jobPost);
 }*/
 module.exports = Job;

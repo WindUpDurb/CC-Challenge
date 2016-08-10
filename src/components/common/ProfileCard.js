@@ -1,8 +1,8 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 
-export const ProfileCard = () => {
+export const ProfileCard = ({changeSection}) => {
     return (
         <div className="text-center">
             <img src="https://covalentcareers.com/media/uploads/defaults/profile_page_title.png"/>
@@ -20,9 +20,15 @@ export const ProfileCard = () => {
             <img src="/statics/myLocation.png"/>
             <span style={{marginLeft: "3px"}}>Somewhere, CA, USA</span>
             <div style={{paddingTop: "1%"}} className="text-center">
-                <button className="btn whiteText backgroundPink">Profile</button>
-                <button style={{marginLeft: "4px"}} className="btn whiteText backgroundBlue">Jobs</button>
+                <button name="jobs" onClick={changeSection}
+                        className="btn whiteText backgroundPink">Jobs</button>
+                <button name="resources" onClick={changeSection}
+                        style={{marginLeft: "4px"}} className="btn whiteText backgroundBlue">Resources</button>
             </div>
         </div>
     );
+};
+
+ProfileCard.propTypes = {
+    changeSection: PropTypes.func
 };

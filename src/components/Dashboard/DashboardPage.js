@@ -4,13 +4,13 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {NavbarPresentation} from "../common/NavbarPresentation";
+import {DashboardJobSection} from "./DashboardJobSection";
+import {DashboardResourcesSection} from "./DashboardResourcesSection";
 import {DashboardHeader} from "./DashboardHeader";
-import {ListedJob} from "../common/ListedJob";
-import {JobListingFilter} from "./JobListingFilter";
-import {NoListings} from "./NoListings";
 import {filterJobs} from "../../actions/functionTools";
 import * as UserActions from "../../actions/UserActions";
 import * as JobListActions from "../../actions/JobListActions";
+import * as BlogResourcesActions from "../../actions/BlogResourcesActions";
 
 
 class DashboardPage extends React.Component {
@@ -24,20 +24,40 @@ class DashboardPage extends React.Component {
                 partTimeOnly: false,
                 fullTimeOnly: false
             },
-            showSection: "jobs"
+            showSection: "jobs",
+            mediaSection: "blog",
+            videoLink: null
         };
         
         this.updateFilter = this.updateFilter.bind(this);
         this.signOut = this.signOut.bind(this);
+        this.changeSection = this.changeSection.bind(this);
+        this.changeMediaSection = this.changeMediaSection.bind(this);
+        this.showVideo = this.showVideo.bind(this);
     }
 
     componentWillMount() {
         this.props.JobListActions.fetchJobList();
+        this.props.BlogResourcesActions.fetchBlogResources();
     }
 
 
     signOut() {
         this.props.UserActions.signOut();
+    }
+
+    showVideo(link) {
+       this.setState({videoLink: link});
+    }
+
+    changeSection(event) {
+        this.setState({showSection: event.target.name});
+        this.setState({videoLink: null});
+    }
+    
+    changeMediaSection(event) {
+        this.setState({mediaSection: event.target.name});
+        this.setState({videoLink: null});
     }
 
     updateFilter(event) {
@@ -58,36 +78,36 @@ class DashboardPage extends React.Component {
     }
 
     render() {
-        let jobListings, noListings;
-        if (!this.state.filteredJobs && this.props.jobListings) jobListings = this.props.jobListings.map((job, index) => {
-            return <ListedJob job={job} key={index}/>;
-        });
-        if (this.state.filteredJobs && this.props.jobListings) jobListings = this.state.filteredJobs.map((job, index) => {
-            return <ListedJob job={job} key={index}/>;
-        });
-        if (jobListings && jobListings.length === 0) noListings = <NoListings/>;
+        let currentSection;
+        if (this.state.showSection === "jobs") currentSection = (
+            <DashboardJobSection
+                updateFilter={this.updateFilter}
+                jobListings={this.props.jobListings}
+                filteredJobs={this.state.filteredJobs}/>
+            );
+        if (this.state.showSection === "resources") currentSection = (
+           <DashboardResourcesSection
+               videoLink={this.state.videoLink}
+               showVideo={this.showVideo}
+                currentMediaSection={this.state.mediaSection}
+                changeMediaSection={this.changeMediaSection}
+                blogResources={this.props.blogResources}/>
+        );
+
         return (
             <div>
                 <NavbarPresentation
                     signOut={this.signOut}
                     activeUser={this.props.activeUser}/>
-                <DashboardHeader />
+                <DashboardHeader 
+                    changeSection={this.changeSection}/>
                 <div className="container">
                     <div id="dashboardHeadingRow" className="row">
                         <div className="lightGreyBB col-md-9">
                             <span id="dashboardHeading">Your Career Dashboard</span>
                         </div>
                     </div>
-                    
-                    <div className="row">
-                        <div className="col-md-3">
-                            <JobListingFilter
-                                updateFilter={this.updateFilter}/>
-                        </div>
-                        <div className="col-md-6">
-                            {noListings || jobListings}
-                        </div>
-                    </div>
+                    {currentSection}
                 </div>
             </div>
         );
@@ -96,16 +116,20 @@ class DashboardPage extends React.Component {
 
 DashboardPage.propTypes = {
     JobListActions: PropTypes.object,
+    BlogResourcesActions: PropTypes.object,
     UserActions: PropTypes.object,
     jobListings: PropTypes.array,
+    blogResources: PropTypes.array,
     activeUser: PropTypes.bool
 };
 
 function mapStateToProps(state, ownProps) {
-    let jobListings;
+    let jobListings, blogResources;
     if (state.jobListings) jobListings = [...state.jobListings];
+    if (state.blogResources) blogResources = [...state.blogResources];
     return {
         jobListings,
+        blogResources,
         activeUser: !!state.activeUser
     };
 }
@@ -113,6 +137,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         JobListActions: bindActionCreators(JobListActions, dispatch),
+        BlogResourcesActions: bindActionCreators(BlogResourcesActions, dispatch),
         UserActions: bindActionCreators(UserActions, dispatch)
     };
 }

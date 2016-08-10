@@ -21,7 +21,7 @@ export const ListedJob = ({job}) => {
     if (job && job.posted_date) daysFromNow = `Posted ${daysFromToday(job.posted_date)}`;
 
     return (
-        <div className="row jobListingRow lightGreyBB">
+        <div className="row jobListingRow card lightGreyBB">
             <div className="col-md-2">
                 <img className="img-responsive img-rounded" src={`/statics/${image}`}/>
             </div>

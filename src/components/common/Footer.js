@@ -1,12 +1,10 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React from "react";
 
 
 export const Footer = () => {
     return (
-        <div id="footer" className="container-fluid">
-            
-        </div>
+        <div id="footer" className="container-fluid"></div>
     );
 };

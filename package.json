@@ -19,19 +19,14 @@
   "dependencies": {
     "async": "^2.0.1",
     "babel-polyfill": "6.8.0",
-    "bcrypt": "^0.8.6",
     "body-parser": "^1.15.2",
     "bootstrap": "3.3.6",
-    "bootstrap-material-design": "^0.5.10",
     "cookie-parser": "^1.4.3",
-    "dotenv": "^2.0.0",
-    "jquery": "2.2.3",
     "json-loader": "^0.5.4",
     "json-web-token": "^2.0.2",
     "moment": "^2.13.0",
     "mongoose": "^4.5.3",
     "morgan": "^1.7.0",
-    "multer": "^1.1.0",
     "react": "15.0.2",
     "react-bootstrap": "^0.29.5",
     "react-dom": "15.0.2",
@@ -45,9 +40,7 @@
     "redux-promise-middleware": "^3.3.2",
     "redux-thunk": "2.0.1",
     "request": "^2.72.0",
-    "toastr": "2.1.2",
-    "transform-loader": "^0.2.3",
-    "uuid": "^2.0.2"
+    "transform-loader": "^0.2.3"
   },
   "devDependencies": {
     "babel-cli": "6.8.0",

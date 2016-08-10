@@ -3,7 +3,6 @@
 import React, {PropTypes} from "react";
 
 export const LogInForm = ({signIn, updateLoginForm}) => {
-
     return (
         <div id="loginDiv" className="row">
             <div className="well col-md-5 col-md-offset-1">

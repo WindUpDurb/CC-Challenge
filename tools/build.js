@@ -5,7 +5,6 @@
 
 import webpack from "webpack";
 import webpackConfig from "../webpack.config.prod";
-import colors from "colors";
 
 process.env.NODE_ENV = "production"; // this assures the Babel dev config (for hot reloading) doesn't apply.
 
@@ -31,7 +30,6 @@ webpack(webpackConfig).run((error, stats) => {
 
     console.log(`Webpack stats: ${stats}`);
 
-    //build succeeds if gotten this far
     console.log("App has been compiled in production mode.".green);
 
     return 0;

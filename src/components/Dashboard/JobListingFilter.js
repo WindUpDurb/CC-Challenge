@@ -22,6 +22,7 @@ export const JobListingFilter = ({updateFilter}) => {
                 <br/>
                 <div id="checkBoxesDiv">
                     <div className="form-group">
+                        <label className="col-md-10 control-label">Filter by only:</label>
                         <div className="col-md-10">
                             <div className="togglebutton">
                                 <label>

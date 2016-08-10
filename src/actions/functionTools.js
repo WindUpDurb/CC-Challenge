@@ -16,7 +16,7 @@ export function filterJobs(searchParams, partTimeOnly, fullTimeOnly, listingArra
             if (searchMatch && fullTimeOnly && !partTimeOnly) return (job.contract_type === "FT");
             return searchMatch;
         } else {
-            if (!partTimeOnly && !fullTimeOnly) return job;
+            if (!partTimeOnly && !fullTimeOnly || partTimeOnly && fullTimeOnly) return job;
             if (partTimeOnly && !fullTimeOnly) return (job.contract_type === "PT");
             if (fullTimeOnly && !partTimeOnly) return (job.contract_type === "FT");
         }

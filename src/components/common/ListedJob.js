@@ -12,10 +12,10 @@ export const ListedJob = ({job}) => {
     if (job && job.organization) location = job.organization;
     if (location && job.location) location = `${location} in ${job.location}`;
     if (job && job.score && job.score >= 90) matchScore = (
-        <span className="matchScore text-success bg-success">{`${job.score}% Match`}</span>
+        <span className="matchScore text-success bg-success roundedCorners">{`${job.score}% Match`}</span>
     );
     if (job && job.score && job.score < 90) matchScore = (
-        <span className="matchScore text-info bg-info">{`${job.score}% Match`}</span>
+        <span className="matchScore text-info bg-info roundedCorners">{`${job.score}% Match`}</span>
     );
     if (job && job.applicants) applicants = `${job.applicants}+ Applicants`;
     if (job && job.posted_date) daysFromNow = `Posted ${daysFromToday(job.posted_date)}`;
@@ -26,13 +26,13 @@ export const ListedJob = ({job}) => {
                 <img className="img-responsive img-rounded" src={`/statics/${image}`}/>
             </div>
             <div className="col-sm-9 col-md-8">
-                <span>{postingTitle}</span>
+                <b className="text-info">{postingTitle}</b>
                 <br/>
                 <span>{location}</span>
                 <br/>
                 {matchScore}
-                <span className="bg-plain">{applicants}</span>
-                <span className="bg-plain">{daysFromNow}</span>
+                <span className="bg-plain roundedCorners">{applicants}</span>
+                <span className="bg-plain roundedCorners">{daysFromNow}</span>
             </div>
         </div>
     );

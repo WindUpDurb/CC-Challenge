@@ -24,6 +24,41 @@ export function signOut() {
     };
 }
 
+export function requestWebcamPermission() {
+    let constraints = {
+        audio: true,
+        video: {
+            height: {ideal: 720},
+            width: {ideal: 1280}
+        }
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => {
+            let video = document.querySelector("video");
+            video.src = window.URL.createObjectURL(stream);
+            video.onloadedmetadata = e => video.play();
+            return stream;
+        })
+        .catch(error => {
+            console.log("Error: ", error);
+        });
+}
+
+export function beginRecording(streamObject) {
+    let recorder = new MediaRecorder(streamObject);
+    recorder.start();
+    recorder.requestData();
+    console.log("Recording has started");
+    console.log("Recorder: ", recorder);
+    return recorder;
+}
+
+export function endRecording(recordingObject) {
+    recordingObject.stop();
+    console.log("Recording end")
+}
+
 export function submitSignInForm(signInForm) {
     return function(dispatch) {
         let headers = new Headers();

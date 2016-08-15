@@ -5,7 +5,7 @@ import React, {PropTypes} from "react";
 export const LogInForm = ({signIn, updateLoginForm}) => {
     return (
         <div id="loginDiv" className="row">
-            <div className="well col-md-5 col-md-offset-1">
+            <div className="well col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-1">
                 <div className="row">
                     <div className="col-sm-10 col-sm-offset-1">
                         <div id="loginText" className="text-center">

@@ -1,10 +1,9 @@
 "use strict";
 
 import React, {PropTypes} from "react";
-import {Link} from "react-router";
 import {daysFromToday} from "../../actions/functionTools";
 
-export const ListedJob = ({job}) => {
+export const MatchedJob = ({job}) => {
     let image, postingTitle, location, matchScore, applicants, daysFromNow;
     if (job && job.image) image = job.image;
     if (job && job.job_title) postingTitle = job.job_title;
@@ -27,7 +26,7 @@ export const ListedJob = ({job}) => {
                 <img className="img-responsive img-rounded" src={`/statics/${image}`}/>
             </div>
             <div className="col-sm-9 col-md-8">
-                <Link to={`/employer/${job._id}`}><b className="text-info">{postingTitle}</b></Link>
+                <b className="text-info">{postingTitle}</b>
                 <br/>
                 <span>{location}</span>
                 <br/>

@@ -125,7 +125,7 @@ DashboardPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
     let jobListings, blogResources;
-    if (state.jobListings) jobListings = [...state.jobListings];
+    if (state.jobListings && state.jobListings.currentListings) jobListings = [...state.jobListings.currentListings];
     if (state.blogResources) blogResources = [...state.blogResources];
     return {
         jobListings,

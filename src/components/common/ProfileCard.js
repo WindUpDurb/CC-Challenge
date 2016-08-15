@@ -1,6 +1,7 @@
 "use strict";
 
 import React, {PropTypes} from "react";
+import {Link} from "react-router";
 
 export const ProfileCard = ({changeSection}) => {
     return (
@@ -24,6 +25,10 @@ export const ProfileCard = ({changeSection}) => {
                         className="btn whiteText backgroundPink">Jobs</button>
                 <button name="resources" onClick={changeSection}
                         style={{marginLeft: "4px"}} className="btn whiteText backgroundBlue">Resources</button>
+                <Link to="/">
+                    <button style={{marginLeft: "4px"}}
+                            className="btn whiteText backgroundPink">Interested in You</button>
+                </Link>
             </div>
         </div>
     );

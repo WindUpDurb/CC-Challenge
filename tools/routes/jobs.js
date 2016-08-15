@@ -13,5 +13,12 @@ router.get("/", (request, response) => {
     });
 });
 
+router.get("/:employerId", (request, response) => {
+    Job.findById(request.params.employerId, (error, jobData) => {
+       if (error || !jobData) return response.status(400).send(error || {error: "There is no data"});
+        response.send(jobData);
+    });
+});
+
 
 module.exports = router;

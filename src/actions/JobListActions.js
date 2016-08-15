@@ -9,6 +9,13 @@ export function dispatchJobListings(jobListings) {
     };
 }
 
+export function dispatchCurrentEmployerPage(employerData) {
+    return {
+        type: types.EMPLOYER_PAGE_RECEIVED,
+        currentEmployer: employerData
+    };
+}
+
 export function fetchJobList() {
     return function (dispatch) {
         return fetch("/api/jobs")
@@ -23,3 +30,13 @@ export function fetchJobList() {
             });
     };
 }
+
+export const hydrateEmployerPage = employerId => dispatch => {
+    return fetch(`/api/jobs/${employerId}`)
+        .then(response => {
+            return response.json();
+        })
+        .then(parsedResponse => {
+            console.log("Parsed Response: ", parsedResponse);
+        });
+};

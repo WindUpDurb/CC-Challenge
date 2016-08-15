@@ -10,3 +10,5 @@ export const SIGN_OUT = "BYE_BYE";
 
 export const JOB_LISTINGS_RECEIVED = "WE_GOT_THE_JOBS";
 export const BLOG_RESOURCES_RECEIVED = "WE_GOT_THE_BLOGS";
+
+export const EMPLOYER_PAGE_RECEIVED = "WE_GOT_THE_JOB";

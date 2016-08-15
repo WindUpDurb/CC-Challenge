@@ -216,3 +216,16 @@
     background-repeat: repeat;
     background-size: cover;
 }
+
+#webcamContainer {
+    margin: 0 auto;
+    width: 500px;
+    height: 375px;
+    border: 5px #333 solid;
+}
+
+#videoElement {
+    width: 500px;
+    height: 375px;
+    background-color: #666;
+}

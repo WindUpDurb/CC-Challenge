@@ -11,20 +11,50 @@ class WebcamReflection extends React.Component {
         super(props);
 
         this.state ={
-            streamObject: null
+            streamObject: null,
+            recordingObject: null,
+            buffer: null
         };
 
         this.beginRecording = this.beginRecording.bind(this);
         this.requestWebcamPermission = this.requestWebcamPermission.bind(this);
+        this.endRecording = this.endRecording.bind(this);
+        this.onDataAvailable = this.onDataAvailable.bind(this);
+        this.bufferToDataUrl = this.bufferToDataUrl.bind(this);
+        this.dataUrlToFile = this.dataUrlToFile.bind(this);
     }
 
     beginRecording() {
         console.log(this.state.streamObject);
         let recorder = new MediaRecorder(this.state.streamObject);
+        recorder.ondataavailable = this.onDataAvailable;
         recorder.start();
-        recorder.requestData();
+        this.setState({recordingObject: recorder});
         console.log("Recording has started");
         console.log("Recorder: ", recorder);
+    }
+
+    onDataAvailable(event) {
+        if(event.data) {
+            let buffer = [];
+            if (this.state.buffer) buffer = [...this.state.buffer];
+            console.log("check: ", buffer);
+            buffer.push(event.data);
+            this.setState({buffer});
+        }
+    }
+
+    endRecording() {
+        let recordingObject = this.state.recordingObject;
+        recordingObject.stop();
+        //ends the feed below
+        recordingObject.stream.getTracks().forEach(function(track) {track.stop();});
+        console.log("Recording end");
+        console.log("blog: ", this.state.buffer);
+        this.bufferToDataUrl((dataUrl, blob) => {
+            let file = this.dataUrlToFile(dataUrl);
+            console.log("File: ", file);
+        });
     }
 
     requestWebcamPermission() {
@@ -45,6 +75,29 @@ class WebcamReflection extends React.Component {
             .catch(error => {
                 console.log("Error: ", error);
             });
+    }
+
+    bufferToDataUrl(callback) {
+        let blob = new Blob(this.state.buffer, {
+            type: "video/webm"
+        });
+
+        let reader = new FileReader();
+        reader.onload = function() {
+            callback(reader.result, blob);
+        };
+        reader.readAsDataURL(blob);
+    }
+
+    dataUrlToFile(dataUrl) {
+        let binary = atob(dataUrl.split(",")[1]);
+        let data = [];
+        for (let i = 0; i < binary.length; i++) {
+            data.push(binary.charAt(i));
+        }
+        return new File([new Uint8Array(data)],'recorded-video.webm', {
+            type: 'video/webm'
+        });
     }
 
 

@@ -20,6 +20,7 @@ class HomePage extends React.Component {
         this.signIn = this.signIn.bind(this);
         this.signOut = this.signOut.bind(this);
         this.updateLoginForm = this.updateLoginForm.bind(this);
+        this.toggleEmployerLogin = this.toggleEmployerLogin.bind(this);
     }
 
     updateLoginForm(event) {
@@ -29,9 +30,9 @@ class HomePage extends React.Component {
         return this.setState({signInForm});
     }
 
-    signIn() {
-        this.props.UserActions.submitSignInForm(this.state.signInForm);
-        
+    signIn(userType) {
+        if (userType === "user") this.props.UserActions.submitSignInForm(this.state.signInForm);
+        if (userType === "employer") this.props.UserActions.submitSignInFormEmployer(this.state.signInForm);
     }
 
     signOut() {
@@ -39,7 +40,11 @@ class HomePage extends React.Component {
     }
 
     toggleSignIn() {
-        this.setState({signInState: !this.state.signInState});
+        this.setState({signInState: "user"});
+    }
+
+    toggleEmployerLogin() {
+        this.setState({signInState: "employer"});
     }
 
     render() {
@@ -50,6 +55,8 @@ class HomePage extends React.Component {
                     activeUser={this.props.activeUser}
                     toggleSignIn={this.toggleSignIn}/>
                 <HomeHeader
+                    toggleUserLogin={this.toggleSignIn}
+                    toggleEmployerLogin={this.toggleEmployerLogin}
                     activeUser={this.props.activeUser}
                     updateLoginForm={this.updateLoginForm}
                     signIn={this.signIn}

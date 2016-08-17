@@ -13,7 +13,7 @@ export const generateRoutes = (store) => {
             <IndexRedirect to="/home"/>
             <Route path="/home" component={HomePage} />
             <Route path="/dashboard" component={DashboardPage} />
-            <Route path="/employer/:employer" component={EmployerPage} />
+            <Route path="/dashboard/employer/:employer" component={EmployerPage} />
         </Route>
     );
 

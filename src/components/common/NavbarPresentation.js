@@ -15,7 +15,7 @@ export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
                             <span className="icon-bar"/>
                             <span className="icon-bar"/>
                         </button>
-                        <Link to="home" style={{width: "300px"}} className="navbar-brand" href="#">
+                        <Link to="" style={{width: "300px"}} className="navbar-brand" href="#">
                             <img id="navLogo" src="/statics/logo.png"/>
                             <span>Covalent</span><span>Careers</span>
                         </Link>

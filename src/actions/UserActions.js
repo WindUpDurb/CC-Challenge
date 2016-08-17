@@ -24,6 +24,34 @@ export function signOut() {
     };
 }
 
+export function submitSignInFormEmployer(signInForm) {
+    return function(dispatch) {
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let options = {
+            method: "POST",
+            credentials: "same-origin",
+            headers: headers,
+            mode: "cors",
+            cache: "default",
+            body: JSON.stringify(signInForm)
+        };
+        return fetch("/api/users/loginEmployer", options)
+            .then(response => {
+                return response.json();
+            })
+            .then(parsedResponse => {
+                if (!parsedResponse.error) {
+                    sessionStorage.setItem("testLogin", JSON.stringify(parsedResponse));
+                    dispatch(dispatchSignInSuccess(parsedResponse));
+                }
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            });
+    };
+}
+
 
 export function submitSignInForm(signInForm) {
     return function(dispatch) {

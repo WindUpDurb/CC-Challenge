@@ -2,16 +2,16 @@
 
 import React, {PropTypes} from "react";
 
-export const LogInForm = ({signIn, toggleEmployerLogin,updateLoginForm}) => {
-    let userLogin = () => signIn("user");
+export const EmployerLoginForm = ({signIn, toggleUserLogin,updateLoginForm}) => {
+    let employerLogin = () => signIn("employer");
     return (
         <div id="loginDiv" className="row">
             <div className="well col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-1">
                 <div className="row">
                     <div className="col-sm-10 col-sm-offset-1">
                         <div id="loginText" className="text-center">
-                            <h3>User Login</h3>
-                            <h6 className="alternateLoginText" onClick={toggleEmployerLogin}>Click here for Employer Login</h6>
+                            <h3>Employer Login</h3>
+                            <h6 className="alternateLoginText" onClick={toggleUserLogin}>Click here for User Login</h6>
                         </div>
                         <div className="input-group input-group-lg">
                             <span className="input-group-addon" id="sizing-addon1">
@@ -39,7 +39,7 @@ export const LogInForm = ({signIn, toggleEmployerLogin,updateLoginForm}) => {
                                 aria-describedby="sizing-addon1"/>
                         </div>
                         <div id="loginButtonDiv" className="text-center">
-                            <button type="button" onClick={userLogin} className="btn btn-success btn-lg">Login</button>
+                            <button type="button" onClick={employerLogin} className="btn btn-success btn-lg">Login</button>
                         </div>
                     </div>
                 </div>
@@ -49,8 +49,8 @@ export const LogInForm = ({signIn, toggleEmployerLogin,updateLoginForm}) => {
 
 };
 
-LogInForm.propTypes = {
+EmployerLoginForm.propTypes = {
     signIn: PropTypes.func,
     updateLoginForm: PropTypes.func,
-    toggleEmployerLogin: PropTypes.func
+    toggleUserLogin: PropTypes.func
 };

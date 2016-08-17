@@ -13,7 +13,11 @@ let jobSchema = new mongoose.Schema({
     score: {type: Number},
     contract_type: {type: String},
     job_title: {type: String},
-    image: {type: String}
+    image: {type: String},
+    videoQuestions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Videos'
+    }]
 });
 
 
@@ -41,7 +45,7 @@ let initialData = [
         contract_type: "FT",
         job_title: "Optician",
         image: "1.jpg"
-    },
+    }/*,
     {
         id: 3,
         posted_date: "2016-08-09T05:00:00.000Z",
@@ -74,10 +78,10 @@ let initialData = [
         contract_type: "FT",
         job_title: "Front Desk Receptionist",
         image: "3.png"
-    }
+    }*/
 ];
 
-/*for (let jobPost of initialData) {
-    Job.create(jobPost);
-}*/
+// for (let jobPost of initialData) {
+//     Job.create(jobPost);
+// }
 module.exports = Job;

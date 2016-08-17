@@ -27,7 +27,7 @@ export const ListedJob = ({job}) => {
                 <img className="img-responsive img-rounded" src={`/statics/${image}`}/>
             </div>
             <div className="col-sm-9 col-md-8">
-                <Link to={`/employer/${job._id}`}><b className="text-info">{postingTitle}</b></Link>
+                <Link to={`/dashboard/employer/${job._id}`}><b className="text-info">{postingTitle}</b></Link>
                 <br/>
                 <span>{location}</span>
                 <br/>

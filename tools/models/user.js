@@ -5,7 +5,16 @@ let bcrypt = require("bcrypt");
 
 let userSchema = new mongoose.Schema({
     email: {type: String},
-    password: {type: String}
+    password: {type: String},
+    applications: [{
+        jobId: {
+            type: mongoose.Schema.Types.ObjectId
+        },
+        videoResponses: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Videos"
+        }
+    }]
 });
 
 
@@ -21,6 +30,6 @@ userSchema.statics.authenticate = (loginData, callback) => {
 let User = mongoose.model("User", userSchema);
 
 
-//User.create({email: "test@test.com", password: "test"});
+//User.create({email: "user@user.com", password: "user"});
 
 module.exports = User;

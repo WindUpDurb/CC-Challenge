@@ -197,6 +197,17 @@
     color: #c34d8e;
 }
 
+.alternateLoginText {
+    color: #c34d8e;
+    cursor: pointer;
+}
+
+.alternateLoginText:hover {
+    color: #428bca;
+    text-decoration: underline;
+}
+
+
 .matchScore {
     padding: 2px;
 }

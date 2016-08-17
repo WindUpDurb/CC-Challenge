@@ -16,7 +16,8 @@ const S3Tasks = {
             Bucket: bucketName,
             Key: key,
             ACL: "public-read",
-            Body: videoObject.buffer
+            Body: videoObject.buffer,
+            ContentType: "video/webm"
         };
 
         console.log("Params: ", params);
@@ -32,7 +33,7 @@ const S3Tasks = {
     retrieveVideo: function (callback) {
         let params = {
             Bucket: bucketName,
-            Key: "23bb8bc2-dc5f-4c79-9de9-4866fcd39866.webm"
+            Key: "f39ac45f-be65-46df-9126-d4cd5e4c9215.blob"
         };
         s3.getObject(params, function (error, data) {
             return callback(error, data);

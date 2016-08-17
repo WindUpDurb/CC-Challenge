@@ -29,7 +29,7 @@ router.get("/retrieveVideo", (request, response) => {
     S3.retrieveVideo((error, data) => {
         if (error) response.status(400).send(error);
         console.log("Data: ", data);
-        response.send(data);
+        response.type("video/webm").send(data);
     });
 });
 

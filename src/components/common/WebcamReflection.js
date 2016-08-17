@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import * as UserActions from "../../actions/UserActions";
 import * as ServerActions from "../../actions/ServerActions";
 import {bindActionCreators} from "redux";
+import {ReplayVideo} from "./ReplayVideo";
 
 class WebcamReflection extends React.Component {
 
@@ -17,7 +18,10 @@ class WebcamReflection extends React.Component {
             buffer: null,
             file: null,
             dataUrl: null,
-            retrievedDataURL: null
+            retrievedDataURL: null,
+            thisBlob: null,
+            readerResult: null,
+            tempBuffer: null
         };
 
         this.beginRecording = this.beginRecording.bind(this);
@@ -33,7 +37,8 @@ class WebcamReflection extends React.Component {
 
     beginRecording() {
         console.log(this.state.streamObject);
-        let recorder = new MediaRecorder(this.state.streamObject);
+        let options = {mimeType: "video/webm"};
+        let recorder = new MediaRecorder(this.state.streamObject, options);
         recorder.ondataavailable = this.onDataAvailable;
         recorder.start();
         this.setState({recordingObject: recorder});
@@ -53,14 +58,12 @@ class WebcamReflection extends React.Component {
         recordingObject.stop();
         //ends the feed below
         recordingObject.stream.getTracks().forEach(function(track) {track.stop();});
-        console.log("Recording end");
-        console.log("blog: ", this.state.buffer);
-        this.bufferToDataUrl((dataUrl, blob) => {
+        this.bufferToDataUrl(this.state.buffer, (dataUrl, blob) => {
             let file = this.dataUrlToFile(dataUrl);
             this.setState({file});
             this.setState({dataUrl});
-            console.log("File: ", file);
-
+            this.setState({readerResult: dataUrl});
+            this.setState({thisBlob: blob})
             //to download file
             /*let url = URL.createObjectURL(blob),
                 el = document.createElement("a");
@@ -75,13 +78,9 @@ class WebcamReflection extends React.Component {
     }
 
     playFromNewlyRecorded() {
-        console.log("Before play")
-        console.log("file: ", this.state.file)
         let video = document.querySelector("video");
         video.src = this.state.dataUrl;
         video.type = "video/webm";
-        console.log("Video object: ", video)
-
         video.play();
         //video.onloadedmetadata = e => {video.play();
     }
@@ -106,11 +105,12 @@ class WebcamReflection extends React.Component {
             });
     }
 
-    bufferToDataUrl(callback) {
-        let blob = new Blob(this.state.buffer, {
+    bufferToDataUrl(buffer, callback) {
+        let blob = new Blob(buffer, {
             type: "video/webm"
         });
 
+        console.log("New blob: ", blob);
         let reader = new FileReader();
         reader.onload = function() {
             callback(reader.result, blob);
@@ -130,26 +130,47 @@ class WebcamReflection extends React.Component {
     }
 
     uploadToAWS() {
-        this.props.ServerActions.uploadToAWS(this.state.file);
+        this.props.ServerActions.uploadToAWS(this.state.thisBlob);
     }
     
     retrieveFromAWS() {
-        //this.props.ServerActions.retrieveFromAWS();
+        this.props.ServerActions.retrieveFromAWS();
+        let setState = (state) => this.setState({readerResult: state});
+        let setBuffer = (state) => this.setState({tempBuffer: state});
         fetch("/api/users/retrieveVideo")
             .then(response => {
-                return response.blob();
+                console.log("Response: ", response)
+                return response.json();
             })
             .then(parsedResponse => {
-                console.log("Blob: ", parsedResponse)
+                console.log("Parsed response: ", parsedResponse);
 
+                setBuffer(parsedResponse.Body.data);
+                this.bufferToDataUrl(this.state.tempBuffer, (dataUrl, blob) => {
+                   this.setState({readerResult: dataUrl});
+
+
+                    let url = URL.createObjectURL(blob),
+                        el = document.createElement("a");
+
+                    document.body.appendChild(el);
+                    el.style = "display:none";
+                    el.href = url;
+                    el.download = "video.webm";
+                    el.click();
+                    URL.revokeObjectURL(url);
+                });
             })
             .catch(error => {
                 console.log("Error: ", error);
             });
+
     }
 
 
     render() {
+        let replayVideo;
+        if (this.state.readerResult) replayVideo = <ReplayVideo source={this.state.readerResult}/>
         return (
             <div className="container-fluid">
                 <div id="webcamContainer">
@@ -164,6 +185,9 @@ class WebcamReflection extends React.Component {
                 <button onClick={this.playFromNewlyRecorded}>Play from Recorded</button>
                 <button onClick={this.uploadToAWS}>Upload</button>
                 <button onClick={this.retrieveFromAWS}>Retrieve from AWS</button>
+                <div>
+                    {replayVideo}
+                </div>
             </div>
         );
 

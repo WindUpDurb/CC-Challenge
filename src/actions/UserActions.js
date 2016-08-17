@@ -24,40 +24,6 @@ export function signOut() {
     };
 }
 
-export function requestWebcamPermission() {
-    let constraints = {
-        audio: true,
-        video: {
-            height: {ideal: 720},
-            width: {ideal: 1280}
-        }
-    };
-
-    navigator.mediaDevices.getUserMedia(constraints)
-        .then(stream => {
-            let video = document.querySelector("video");
-            video.src = window.URL.createObjectURL(stream);
-            video.onloadedmetadata = e => video.play();
-            return stream;
-        })
-        .catch(error => {
-            console.log("Error: ", error);
-        });
-}
-
-export function beginRecording(streamObject) {
-    let recorder = new MediaRecorder(streamObject);
-    recorder.start();
-    recorder.requestData();
-    console.log("Recording has started");
-    console.log("Recorder: ", recorder);
-    return recorder;
-}
-
-export function endRecording(recordingObject) {
-    recordingObject.stop();
-    console.log("Recording end")
-}
 
 export function submitSignInForm(signInForm) {
     return function(dispatch) {
@@ -86,3 +52,29 @@ export function submitSignInForm(signInForm) {
             });
     };
 }
+
+
+
+
+export function uploadToAWS(file) {
+    return function (dispatch) {
+        let data = new FormData();
+        data.append("file", file);
+        let options = {
+            method: "POST",
+            credentials: "same-origin",
+            //headers: headers,
+            mode: "cors",
+            body: data
+        };
+        console.log("Options.body: ", options.body);
+        return fetch("/api/users/uploadToAWS", options)
+            .then(response => {
+                console.log("Response", response);
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            });
+    };
+}
+

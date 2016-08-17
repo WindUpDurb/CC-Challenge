@@ -3,6 +3,7 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import * as UserActions from "../../actions/UserActions";
+import * as ServerActions from "../../actions/ServerActions";
 import {bindActionCreators} from "redux";
 
 class WebcamReflection extends React.Component {
@@ -15,7 +16,8 @@ class WebcamReflection extends React.Component {
             recordingObject: null,
             buffer: null,
             file: null,
-            dataUrl: null
+            dataUrl: null,
+            retrievedDataURL: null
         };
 
         this.beginRecording = this.beginRecording.bind(this);
@@ -26,6 +28,7 @@ class WebcamReflection extends React.Component {
         this.dataUrlToFile = this.dataUrlToFile.bind(this);
         this.playFromNewlyRecorded = this.playFromNewlyRecorded.bind(this);
         this.uploadToAWS = this.uploadToAWS.bind(this);
+        this.retrieveFromAWS = this.retrieveFromAWS.bind(this);
     }
 
     beginRecording() {
@@ -40,7 +43,6 @@ class WebcamReflection extends React.Component {
         if(event.data) {
             let buffer = [];
             if (this.state.buffer) buffer = [...this.state.buffer];
-            console.log("check: ", buffer);
             buffer.push(event.data);
             this.setState({buffer});
         }
@@ -128,7 +130,22 @@ class WebcamReflection extends React.Component {
     }
 
     uploadToAWS() {
-        this.props.UserActions.uploadToAWS(this.state.file);
+        this.props.ServerActions.uploadToAWS(this.state.file);
+    }
+    
+    retrieveFromAWS() {
+        //this.props.ServerActions.retrieveFromAWS();
+        fetch("/api/users/retrieveVideo")
+            .then(response => {
+                return response.blob();
+            })
+            .then(parsedResponse => {
+                console.log("Blob: ", parsedResponse)
+
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            });
     }
 
 
@@ -146,6 +163,7 @@ class WebcamReflection extends React.Component {
                 <button onClick={this.endRecording}>End</button>
                 <button onClick={this.playFromNewlyRecorded}>Play from Recorded</button>
                 <button onClick={this.uploadToAWS}>Upload</button>
+                <button onClick={this.retrieveFromAWS}>Retrieve from AWS</button>
             </div>
         );
 
@@ -153,6 +171,7 @@ class WebcamReflection extends React.Component {
 }
 
 WebcamReflection.propTypes = {
+    ServerActions: PropTypes.object.isRequired,
     UserActions: PropTypes.object.isRequired
 };
 
@@ -164,7 +183,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        UserActions: bindActionCreators(UserActions, dispatch)
+        UserActions: bindActionCreators(UserActions, dispatch),
+        ServerActions: bindActionCreators(ServerActions, dispatch)
     };
 }
 

@@ -16,12 +16,21 @@ router.post("/login", (request, response) => {
     });
 });
 
-router.post("/uploadToAWS", upload.any(), (request, response) => {
-    console.log("Before: ");
+router.post("/uploadToAWS", upload.single("newVideo"), (request, response) => {
     console.log("File: ", request.file);
-    console.log("Files: ", request.files);
-    console.log("Body: ", request.body);
-    response.send();
+    S3.upload(request.file, (error, results) => {
+        console.log("Error: ", error);
+        console.log("Results: ", results)
+        response.send();
+    });
+});
+
+router.get("/retrieveVideo", (request, response) => {
+    S3.retrieveVideo((error, data) => {
+        if (error) response.status(400).send(error);
+        console.log("Data: ", data);
+        response.send(data);
+    });
 });
 
 module.exports = router;

@@ -52,29 +52,3 @@ export function submitSignInForm(signInForm) {
             });
     };
 }
-
-
-
-
-export function uploadToAWS(file) {
-    return function (dispatch) {
-        let data = new FormData();
-        data.append("file", file);
-        let options = {
-            method: "POST",
-            credentials: "same-origin",
-            //headers: headers,
-            mode: "cors",
-            body: data
-        };
-        console.log("Options.body: ", options.body);
-        return fetch("/api/users/uploadToAWS", options)
-            .then(response => {
-                console.log("Response", response);
-            })
-            .catch(error => {
-                console.log("Error: ", error);
-            });
-    };
-}
-

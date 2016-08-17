@@ -5,28 +5,37 @@ const uuid = require("uuid");
 
 const s3 = new AWS.S3();
 
-const bucketName = "drink-drank-drunk";
+const bucketName = "covalent-careers-test";
 const urlBase = "https://s3-us-west-1.amazonaws.com";
 
 const S3Tasks = {
-    upload: function (photoObject, callback) {
-        let extension = photoObject.originalname.split(".").pop();
+    upload: function (videoObject, callback) {
+        let extension = videoObject.originalname.split(".").pop();
         let key = uuid() + `.${extension}`;
         let params = {
             Bucket: bucketName,
             Key: key,
             ACL: "public-read",
-            Body: photoObject.buffer
+            Body: videoObject.buffer
         };
 
         console.log("Params: ", params);
-
-        s3.putObject(params, function (error, result) {
+        //if issues, try the initial putObject method instead of upload
+        s3.upload(params, function (error, result) {
             if (error) return callback(error);
-            let imageUrl = `${urlBase}/${bucketName}/${key}`;
+            let fileUrl = `${urlBase}/${bucketName}/${key}`;
             let toReturn = result;
-            toReturn.imageUrl = imageUrl;
+            toReturn.fileUrl = fileUrl;
             callback(error, toReturn);
+        });
+    },
+    retrieveVideo: function (callback) {
+        let params = {
+            Bucket: bucketName,
+            Key: "23bb8bc2-dc5f-4c79-9de9-4866fcd39866.webm"
+        };
+        s3.getObject(params, function (error, data) {
+            return callback(error, data);
         });
     }
 

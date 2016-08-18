@@ -3,11 +3,11 @@
 import React, {PropTypes} from "react";
 import {InterviewQuestionDiv} from "../common/InterviewQuestionDiv";
 
-export const CultureFitSection = ({interviewQuestion}) => {
+export const CultureFitSection = ({respondToQuestion, interviewQuestion}) => {
 
     let question;
 
-    if (interviewQuestion) question = <InterviewQuestionDiv questionNumber={1}/>
+    if (interviewQuestion) question = <InterviewQuestionDiv respondToQuestion={respondToQuestion} questionId={interviewQuestion[0]} questionNumber={1}/>
 
     return (
       <div className="container">
@@ -71,5 +71,6 @@ export const CultureFitSection = ({interviewQuestion}) => {
 };
 
 CultureFitSection.propTypes = {
-    interviewQuestion: PropTypes.array
+    interviewQuestion: PropTypes.array,
+    respondToQuestion: PropTypes.func
 };

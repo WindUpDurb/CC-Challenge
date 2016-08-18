@@ -5,9 +5,11 @@ import {connect} from "react-redux";
 import {NavbarPresentation} from "../common/NavbarPresentation";
 import {EmployerPagePresentation} from "./EmployerPagePresentation";
 import {CultureFitSection} from "./CultureFitSection";
+import {AnswerVideoSection} from "./AnswerVideoSection";
 import WebcamReflection from "../common/WebcamReflection";
 import * as JobListActions from "../../actions/JobListActions";
 import * as UserActions from "../../actions/UserActions";
+import * as WebcamAndVideoActions from "../../actions/WebcamAndVideoActions";
 import {bindActionCreators} from "redux";
 
 
@@ -19,6 +21,8 @@ class EmployerPage extends React.Component {
         };
 
         this.changeSection = this.changeSection.bind(this);
+        this.respondToQuestion = this.respondToQuestion.bind(this);
+        this.beginQuestion = this.beginQuestion.bind(this);
     }
 
     componentWillMount() {
@@ -29,12 +33,31 @@ class EmployerPage extends React.Component {
         this.setState({currentSection: event.target.name});
     }
 
+    respondToQuestion(questionId){
+        this.props.WebcamAndVideoActions.fetchVideoLink(questionId);
+    }
 
+    beginQuestion(videoLink) {
+        this.setState({currentSection: "response"});
+    }
+
+
+    watchQuestion() {
+        let video = document.querySelector("#watchQuestion");
+        video.play();
+    }
 
     render() {
         let currentSection;
         if (this.state.currentSection === "details") currentSection = <EmployerPagePresentation />;
-        if (this.state.currentSection === "cultureFit") currentSection = <CultureFitSection interviewQuestion={this.props.interviewQuestion} />;
+        if (this.state.currentSection === "cultureFit") currentSection = (
+            <CultureFitSection respondToQuestion={this.respondToQuestion} interviewQuestion={this.props.interviewQuestion} />
+        );
+        if (this.props.videoQuestion) currentSection = (
+            <AnswerVideoSection beginQuestion={this.beginQuestion} fetchedLink={this.props.videoQuestion}
+                                currentSection={this.state.currentSection} videoLink={this.state.videoLink}
+                                watchQuestion={this.watchQuestion}/>
+        );
         return (
             <div>
                 <NavbarPresentation/>
@@ -50,7 +73,6 @@ class EmployerPage extends React.Component {
                     <div style={{backgroundColor: "white"}} className="well">
                         {currentSection}
                     </div>
-
                 </div>
             </div>
         );
@@ -59,25 +81,30 @@ class EmployerPage extends React.Component {
 
 EmployerPage.propTypes = {
     employerId: PropTypes.string.isRequired,
+    videoQuestion: PropTypes.string,
     JobListActions: PropTypes.object.isRequired,
+    WebcamAndVideoActions: PropTypes.object.isRequired,
     UserActions: PropTypes.object.isRequired,
     currentEmployerPage: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {
-    let currentEmployerPage, interviewQuestion;
+    let currentEmployerPage, interviewQuestion, videoQuestion;
+    if (state.webcamAndVideo && state.webcamAndVideo.fetchedLink) videoQuestion = state.webcamAndVideo.fetchedLink;
     if (state.jobListings && state.jobListings.currentEmployerPage) currentEmployerPage = state.jobListings.currentEmployerPage;
     if (currentEmployerPage && currentEmployerPage.videoQuestions.length) interviewQuestion = [...currentEmployerPage.videoQuestions];
     return {
         employerId: ownProps.params.employer,
         currentEmployerPage,
-        interviewQuestion
+        interviewQuestion,
+        videoQuestion
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         JobListActions: bindActionCreators(JobListActions, dispatch),
+        WebcamAndVideoActions: bindActionCreators(WebcamAndVideoActions, dispatch),
         UserActions: bindActionCreators(UserActions, dispatch)
     };
 }

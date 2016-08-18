@@ -89,6 +89,10 @@
     font-size: 1.25em;
 }
 
+.closeButton {
+    cursor: pointer;
+}
+
 .blogCardDiv {
     padding-top: 4%;
     padding-bottom: 2%;

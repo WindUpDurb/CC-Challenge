@@ -2,6 +2,7 @@
 
 import * as actionTypes from "./actionTypes";
 
+
 export function retrieveFromAWS() {
     return function (dispatch) {
         return fetch("/api/users/retrieveVideo")
@@ -26,10 +27,12 @@ export function uploadToAWS(file, jobId, employerId) {
             mode: "cors",
             body: data
         };
-        console.log("here: ", `/api/users/uploadQuestionToAWS/${jobId}/${employerId}`)
         return fetch(`/api/users/uploadQuestionToAWS/${jobId}/${employerId}`, options)
             .then(response => {
-                console.log("Response", response);
+                return response.json();
+            })
+            .then(parsedResponse => {
+                console.log("Done: ", parsedResponse);
             })
             .catch(error => {
                 console.log("Error: ", error);

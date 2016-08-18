@@ -6,7 +6,7 @@ import {bindActionCreators} from "redux";
 import {PulsingDot} from "../common/PulsingDot";
 import * as UserActions from "../../actions/UserActions";
 import * as ServerActions from "../../actions/ServerActions";
-
+import * as WebcamAndVideoActions from "../../actions/WebcamAndVideoActions";
 
 class UploadVideoComponent extends React.Component {
 
@@ -29,6 +29,7 @@ class UploadVideoComponent extends React.Component {
         this.bufferToDataUrl = this.bufferToDataUrl.bind(this);
         this.playFromNewlyRecorded = this.playFromNewlyRecorded.bind(this);
         this.uploadToAWS = this.uploadToAWS.bind(this);
+        this.closeStream = this.closeStream.bind(this);
     }
 
 
@@ -94,6 +95,9 @@ class UploadVideoComponent extends React.Component {
         this.props.ServerActions.uploadToAWS(this.state.blobToUpload, this.props.jobId, this.props.employerId);
     }
 
+    closeStream() {
+        this.props.WebcamAndVideoActions.closeStream();
+    }
 
 
     render() {
@@ -110,6 +114,11 @@ class UploadVideoComponent extends React.Component {
         return (
             <div id="outerWebcamPadding">
                 <div className="container well">
+                    <div className="row">
+                        <div className="col-md-1 col-md-offset-11">
+                            <img onClick={this.closeStream} className="closeButton" src="/statics/close.png"/>
+                        </div>
+                    </div>
                     <div className="row pulsingDotRow">
                         <div className="col-md-3">
                             {recording}
@@ -135,6 +144,7 @@ class UploadVideoComponent extends React.Component {
 
 UploadVideoComponent.propTypes = {
     ServerActions: PropTypes.object.isRequired,
+    WebcamAndVideoActions: PropTypes.object.isRequired,
     streamingObject: PropTypes.object.isRequired,
     UserActions: PropTypes.object.isRequired,
     employerId: PropTypes.string,
@@ -142,7 +152,6 @@ UploadVideoComponent.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-    console.log("Own props: ", ownProps)
     let streamingObject, employerId, jobId;
     if (state.webcamAndVideo && state.webcamAndVideo.openStream) streamingObject = state.webcamAndVideo.openStream;
     if (ownProps.employerId) employerId = ownProps.employerId;
@@ -157,6 +166,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         UserActions: bindActionCreators(UserActions, dispatch),
+        WebcamAndVideoActions: bindActionCreators(WebcamAndVideoActions, dispatch),
         ServerActions: bindActionCreators(ServerActions, dispatch)
     };
 }

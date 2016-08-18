@@ -19,6 +19,7 @@ class UploadVideoPage extends React.Component {
         };
         
         this.requestCamPermissionAndOpen = this.requestCamPermissionAndOpen.bind(this);
+        this.fetchVideoLink = this.fetchVideoLink.bind(this);
 
     }
 
@@ -29,16 +30,23 @@ class UploadVideoPage extends React.Component {
     requestCamPermissionAndOpen() {
         this.props.WebcamAndVideoActions.requestWebcamPermissionAndOpen();
     }
+    
+    fetchVideoLink(linkId) {
+        this.props.WebcamAndVideoActions.fetchVideoLink(linkId);
+    }
 
 
 
     render() {
         let showSection;
         if (this.props.employer) showSection = (
-            <EmployerInterface requestWebcamPermission={this.requestCamPermissionAndOpen} positionData={this.props.jobData}/>
+            <EmployerInterface requestWebcamPermission={this.requestCamPermissionAndOpen}
+                               fetchVideoLink={this.fetchVideoLink} positionData={this.props.jobData}
+                               retrievedLink={this.props.retrievedLink}/>
         );
         if (this.props.employer && this.props.openStream) showSection = (
-            <UploadVideoComponent jobId={this.props.jobId} employerId={this.props.employer && this.props.activeUser._id}/>
+            <UploadVideoComponent jobId={this.props.jobId} 
+                                  employerId={this.props.employer && this.props.activeUser._id}/>
         );
         return (
             <div>
@@ -63,12 +71,14 @@ UploadVideoPage.propTypes = {
     employer: PropTypes.bool,
     activeUser: PropTypes.object,
     jobData: PropTypes.object,
+    retrievedLink: PropTypes.string,
     jobId: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
-    let activeUser, jobData, openStream;
+    let activeUser, jobData, openStream, retrievedLink;
     if (state.activeUser) activeUser = state.activeUser;
+    if (state.webcamAndVideo && state.webcamAndVideo.fetchedLink) retrievedLink = state.webcamAndVideo.fetchedLink;
     if (state.jobListings && state.jobListings.currentPositionData) jobData = state.jobListings.currentPositionData;
     if (state.webcamAndVideo && state.webcamAndVideo.openStream) openStream = state.webcamAndVideo.openStream;
     return {
@@ -77,6 +87,7 @@ function mapStateToProps(state, ownProps) {
         activeUser,
         jobData,
         openStream,
+        retrievedLink,
         jobId: ownProps.routeParams.positionId
     };
 }

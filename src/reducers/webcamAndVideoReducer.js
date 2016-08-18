@@ -11,6 +11,16 @@ export default function webcamAndVideoReducer(state = initialState.webcamAndVide
             return (
                 Object.assign({}, state, {openStream: action.streamObject})
             );
+
+        case types.STREAM_CLOSE:
+            return (
+                Object.assign({}, state, {openStream: null})
+            );
+
+        case types.AWS_LINK_RECEIVED:
+            return (
+                Object.assign({}, state, {fetchedLink: action.link})
+            );
         
         default:
             return state;

@@ -9,6 +9,42 @@ export function dispatchStreamObject(streamObject) {
     };
 }
 
+export function dispatchCloseStream() {
+    return {
+        type: types.STREAM_CLOSE
+        
+    };
+}
+
+export function dispatchAWSLink(link) {
+    return {
+        type: types.AWS_LINK_RECEIVED,
+        link
+
+    };
+}
+
+export function closeStream() {
+    return function (dispatch) {
+        dispatch(dispatchCloseStream());
+    };
+}
+
+export function fetchVideoLink(videoId) {
+    return function (dispatch) {
+        fetch(`/api/jobs/videoLink/${videoId}`)
+            .then(response => {
+                return response.json();
+            })
+            .then(parsedResponse => {
+                dispatch(dispatchAWSLink(parsedResponse.awsLink));
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            });
+    };
+}
+
 export function requestWebcamPermissionAndOpen() {
     return function (dispatch) {
         console.log("here")

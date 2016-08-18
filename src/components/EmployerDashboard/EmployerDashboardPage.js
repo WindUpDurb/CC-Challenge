@@ -18,12 +18,17 @@ class EmployerDashboardPage extends React.Component {
 
         };
 
+        this.signOut = this.signOut.bind(this);
     }
 
     componentWillMount() {
 
     }
 
+
+    signOut() {
+        this.props.UserActions.signOut();
+    }
 
 
     render() {

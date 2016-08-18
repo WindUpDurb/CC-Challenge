@@ -59,6 +59,6 @@ export const hydrateEmployerPage = employerId => dispatch => {
             return response.json();
         })
         .then(parsedResponse => {
-            console.log("Parsed Response: ", parsedResponse);
+            dispatch(dispatchCurrentEmployerPage(parsedResponse));
         });
 };

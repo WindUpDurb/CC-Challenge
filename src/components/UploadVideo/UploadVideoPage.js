@@ -20,6 +20,8 @@ class UploadVideoPage extends React.Component {
         
         this.requestCamPermissionAndOpen = this.requestCamPermissionAndOpen.bind(this);
         this.fetchVideoLink = this.fetchVideoLink.bind(this);
+        this.playVideo = this.playVideo.bind(this);
+        this.clearVideoLinkState = this.clearVideoLinkState.bind(this);
 
     }
 
@@ -31,8 +33,17 @@ class UploadVideoPage extends React.Component {
         this.props.WebcamAndVideoActions.requestWebcamPermissionAndOpen();
     }
     
+    playVideo() {
+        let video = document.querySelector("#videoElement");
+        video.play();
+    }
+    
     fetchVideoLink(linkId) {
         this.props.WebcamAndVideoActions.fetchVideoLink(linkId);
+    }
+    
+    clearVideoLinkState() {
+        this.props.WebcamAndVideoActions.clearVideoLinkState();
     }
 
 
@@ -42,7 +53,8 @@ class UploadVideoPage extends React.Component {
         if (this.props.employer) showSection = (
             <EmployerInterface requestWebcamPermission={this.requestCamPermissionAndOpen}
                                fetchVideoLink={this.fetchVideoLink} positionData={this.props.jobData}
-                               retrievedLink={this.props.retrievedLink}/>
+                               retrievedLink={this.props.retrievedLink} playVideo={this.playVideo}
+                               clearVideoLinkState={this.clearVideoLinkState}/>
         );
         if (this.props.employer && this.props.openStream) showSection = (
             <UploadVideoComponent jobId={this.props.jobId} 

@@ -16,6 +16,12 @@ export function dispatchCloseStream() {
     };
 }
 
+export function dispatchClearVideoLink() {
+    return {
+        type: types.CLEAR_ACTIVE_LINK
+    };
+}
+
 export function dispatchAWSLink(link) {
     return {
         type: types.AWS_LINK_RECEIVED,
@@ -27,6 +33,12 @@ export function dispatchAWSLink(link) {
 export function closeStream() {
     return function (dispatch) {
         dispatch(dispatchCloseStream());
+    };
+}
+
+export function clearVideoLinkState() {
+    return function (dispatch) {
+        dispatch(dispatchClearVideoLink());
     };
 }
 
@@ -47,7 +59,6 @@ export function fetchVideoLink(videoId) {
 
 export function requestWebcamPermissionAndOpen() {
     return function (dispatch) {
-        console.log("here")
         let constraints = {
             audio: true,
             video: {

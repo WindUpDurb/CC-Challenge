@@ -1,12 +1,49 @@
 "use strict";
 
 import React, {PropTypes} from "react";
+import UploadVideoComponent from "../common/UploadVideoComponent";
 
-export const AnswerVideoSection = ({beginQuestion, watchQuestion, currentSection, fetchedLink}) => {
+export const AnswerVideoSection = ({beginQuestion, streamObject, watched, respond, watchQuestion, initiateResponse, currentSection, fetchedLink}) => {
     let begin = () => beginQuestion(fetchedLink);
     let button;
     if (currentSection === "response") button = <button onClick={watchQuestion} className="btn btn-lg">Watch Question</button>;
-    if (currentSection !== "response") {
+    if (currentSection === "response" && watched) button = <button onClick={initiateResponse} className="btn btn-lg">Respond to Question</button>;
+    if (currentSection === "response" && !streamObject) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="lightGreyBB col-md-10">
+                        <h3>Video Screening Response</h3>
+                    </div>
+                </div>
+                <div className="text-center">
+                    <h3>For Question 1</h3>
+                </div>
+                <div className="row">
+                    <div className="col-md-6 col-md-offset-2">
+                        <video id="watchQuestion" src={fetchedLink}/>
+                    </div>
+                </div>
+                <div className="row text-center">
+                    {button}
+                </div>
+            </div>
+        );
+    } else if (currentSection === "response" && watched && streamObject) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="lightGreyBB col-md-10">
+                        <h3>Video Screening Response</h3>
+                    </div>
+                </div>
+                <div className="text-center">
+                    <h3>For Question 1</h3>
+                </div>
+                <UploadVideoComponent />
+            </div>
+        );
+    } else {
         return (
             <div className="container">
                 <div className="row">
@@ -33,33 +70,16 @@ export const AnswerVideoSection = ({beginQuestion, watchQuestion, currentSection
                 </div>
             </div>
         );
-    } else {
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="lightGreyBB col-md-10">
-                        <h3>Video Screening Response</h3>
-                    </div>
-                </div>
-                <div className="text-center">
-                    <h3>For Question 1</h3>
-                </div>
-                <div className="row">
-                    <div className="col-md-6 col-md-offset-2">
-                        <video id="watchQuestion" src={fetchedLink}/>
-                    </div>
-                </div>
-                <div className="row text-center">
-                    {button}
-                </div>
-            </div>
-            );
     }
 };
 
 AnswerVideoSection.propTypes = {
     beginQuestion: PropTypes.func,
     watchQuestion: PropTypes.func,
+    initiateResponse: PropTypes.func,
     currentSection: PropTypes.string,
     fetchedLink: PropTypes.string,
+    respond: PropTypes.bool,
+    watched: PropTypes.bool,
+    streamObject: PropTypes.object
 };

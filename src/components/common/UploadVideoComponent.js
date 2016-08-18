@@ -112,10 +112,9 @@ class UploadVideoComponent extends React.Component {
             </div>
         );
         return (
-            <div id="outerWebcamPadding">
-                <div className="container well">
+            <div>
                     <div className="row">
-                        <div className="col-md-1 col-md-offset-11">
+                        <div className="col-md-1 col-md-offset-9">
                             <img onClick={this.closeStream} className="closeButton" src="/statics/close.png"/>
                         </div>
                     </div>
@@ -134,7 +133,6 @@ class UploadVideoComponent extends React.Component {
                     <div className="row text-center">
                         {button}
                     </div>
-                </div>
             </div>
 
         );

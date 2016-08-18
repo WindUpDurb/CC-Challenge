@@ -98,7 +98,7 @@ class DashboardPage extends React.Component {
             <div>
                 <NavbarPresentation
                     signOut={this.signOut}
-                    activeUser={this.props.activeUser}/>
+                    activeUser={this.props.activeUserBool}/>
                 <DashboardHeader 
                     changeSection={this.changeSection}/>
                 <div className="container">
@@ -120,17 +120,20 @@ DashboardPage.propTypes = {
     UserActions: PropTypes.object,
     jobListings: PropTypes.array,
     blogResources: PropTypes.array,
-    activeUser: PropTypes.bool
+    activeUserBool: PropTypes.bool,
+    activeUser: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {
-    let jobListings, blogResources;
+    let jobListings, blogResources, activeUser;
     if (state.jobListings && state.jobListings.currentListings) jobListings = [...state.jobListings.currentListings];
     if (state.blogResources) blogResources = [...state.blogResources];
+    if (state.activeUser) activeUser = state.activeUser;
     return {
         jobListings,
         blogResources,
-        activeUser: !!state.activeUser
+        activeUserBool: !!state.activeUser,
+        activeUser
     };
 }
 

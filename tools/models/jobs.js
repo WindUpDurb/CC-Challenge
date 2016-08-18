@@ -82,6 +82,7 @@ let initialData = [
 ];
 
 // for (let jobPost of initialData) {
-//     Job.create(jobPost);
-// }
+//      Job.create(jobPost);
+//  }
+
 module.exports = Job;

@@ -13,7 +13,7 @@ class HomePage extends React.Component {
         super(props);
 
         this.state = {
-            signInState: false,
+            signInState: "neither",
             signInForm: {}
         };
         this.toggleSignIn = this.toggleSignIn.bind(this);
@@ -51,6 +51,7 @@ class HomePage extends React.Component {
         return (
             <div>
                 <NavbarPresentation
+                    employer={this.props.employer}
                     signOut={this.signOut}
                     activeUser={this.props.activeUser}
                     toggleSignIn={this.toggleSignIn}/>
@@ -69,6 +70,7 @@ class HomePage extends React.Component {
 
 HomePage.propTypes = {
     UserActions: PropTypes.object,
+    employer: PropTypes.bool,
     activeUser: PropTypes.bool
 };
 
@@ -80,7 +82,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps (state, ownProps) {
     return {
-        activeUser: !!state.activeUser
+        activeUser: !!state.activeUser,
+        employer: !!state.activeUser && !!state.activeUser.employer
     };
 }
 

@@ -7,7 +7,7 @@ import {EmployerLoginForm} from "../common/EmployerLoginForm";
 
 export const HomeHeader = ({activeUser, updateLoginForm, signIn, toggleUserLogin, toggleEmployerLogin,signInState}) => {
     let headerContent;
-    if (!signInState || activeUser) headerContent = <HomeHeaderWelcome/>;
+    if (signInState === "neither" || activeUser) headerContent = <HomeHeaderWelcome/>;
     if (signInState === "user" && !activeUser) headerContent = (
         <LogInForm toggleEmployerLogin={toggleEmployerLogin} updateLoginForm={updateLoginForm} signIn={signIn}/>
     );
@@ -26,9 +26,10 @@ export const HomeHeader = ({activeUser, updateLoginForm, signIn, toggleUserLogin
 };
 
 HomeHeader.propTypes = {
-    signInState: PropTypes.bool,
+    signInState: PropTypes.string,
     activeUser: PropTypes.bool,
     signIn: PropTypes.func,
     toggleEmployerLogin: PropTypes.func,
+    toggleUserLogin: PropTypes.func,
     updateLoginForm: PropTypes.func
 };

@@ -6,11 +6,14 @@ let bcrypt = require("bcrypt");
 let employerSchema = new mongoose.Schema({
     email: {type: String},
     password: {type: String},
+    name: {type: String},
     jobs: [{
         jobId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Job"
         },
+        jobTitle: {type: String},
+        organization: {type: String},
         videoQuestion: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Videos"
@@ -36,7 +39,9 @@ employerSchema.statics.addVideoQuestion = (uploadedData, callback) => {
 };
 
 employerSchema.statics.authenticate = (loginData, callback) => {
-    Employer.findOne({ email : loginData.email }, function (error, databaseUser) {
+    Employer.findOne({ email : loginData.email })
+        .populate("jobId")
+        .exec((error, databaseUser) => {
         if (error || !databaseUser || databaseUser.password !== loginData.password) {
             return callback(error || {error: "Login Information is Invalid."});
         }
@@ -47,6 +52,22 @@ employerSchema.statics.authenticate = (loginData, callback) => {
 let Employer = mongoose.model("Employer", employerSchema);
 
 
-//Employer.create({email: "employer@employer.com", password: "employer"});
+/*Employer.create({
+    email: "employer@employer.com",
+    password: "employer",
+    name: "Dr. John Doe",
+    jobs: [
+        {
+            jobId: "57b4efa2b522480e7a58ccfc",
+            jobTitle: "Optometrist",
+            organization: "Optix Family Eye Care"
+        },
+        {
+            jobId: "57b4efa2b522480e7a58ccfd",
+            jobTitle: "Optician",
+            organization: "Optix Family Eye Care"
+        }
+    ]
+});*/
 
 module.exports = Employer;

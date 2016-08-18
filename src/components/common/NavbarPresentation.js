@@ -3,7 +3,7 @@
 import React, {PropTypes} from "react";
 import {Link} from "react-router";
 
-export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
+export const NavbarPresentation = ({toggleSignIn, employer, signOut, activeUser}) => {
     if (!activeUser) {
         return (
             <nav id="nav" className="navbar navbar-default">
@@ -15,7 +15,7 @@ export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
                             <span className="icon-bar"/>
                             <span className="icon-bar"/>
                         </button>
-                        <Link to="" style={{width: "300px"}} className="navbar-brand" href="#">
+                        <Link to="home" style={{width: "300px"}} className="navbar-brand" href="#">
                             <img id="navLogo" src="/statics/logo.png"/>
                             <span>Covalent</span><span>Careers</span>
                         </Link>
@@ -29,7 +29,7 @@ export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
                 </div>
             </nav>
         );
-    } else {
+    } else if (activeUser && !employer) {
         return (
             <nav id="nav" className="navbar navbar-default">
                 <div className="container-fluid">
@@ -55,6 +55,32 @@ export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
                 </div>
             </nav>
         );
+    } else if (activeUser && employer) {
+        return (
+            <nav id="nav" className="navbar navbar-default">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
+                        </button>
+                        <Link to="home" style={{width: "300px"}} className="navbar-brand" href="#">
+                            <img id="navLogo" src="/statics/logo.png"/>
+                            <span>Covalent</span><span>Careers</span>
+                        </Link>
+                    </div>
+
+                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul className="nav navbar-nav navbar-right">
+                            <li><Link to="employerDashboard">Employer Dashboard</Link></li>
+                            <li><a className="pointer" onClick={signOut}>Sign Out </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        );
     }
     
 };
@@ -62,5 +88,6 @@ export const NavbarPresentation = ({toggleSignIn, signOut, activeUser}) => {
 NavbarPresentation.propTypes = {
     toggleSignIn: PropTypes.func,
     signOut: PropTypes.func,
+    employer: PropTypes.bool,
     activeUser: PropTypes.bool
 };

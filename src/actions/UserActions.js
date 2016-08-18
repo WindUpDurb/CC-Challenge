@@ -42,6 +42,7 @@ export function submitSignInFormEmployer(signInForm) {
             })
             .then(parsedResponse => {
                 if (!parsedResponse.error) {
+                    parsedResponse.employer = true;
                     sessionStorage.setItem("testLogin", JSON.stringify(parsedResponse));
                     dispatch(dispatchSignInSuccess(parsedResponse));
                 }

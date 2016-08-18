@@ -9,10 +9,32 @@ export function dispatchJobListings(jobListings) {
     };
 }
 
+export function dispatchCurrentPositionData(positionData) {
+    return {
+        type: types.JOB_DATA_RECEIVED,
+        positionData
+    };
+}
+
 export function dispatchCurrentEmployerPage(employerData) {
     return {
         type: types.EMPLOYER_PAGE_RECEIVED,
         currentEmployer: employerData
+    };
+}
+
+export function fetchJobData(jobId) {
+    return function (dispatch) {
+        return fetch(`/api/jobs/${jobId}`)
+            .then(response => {
+                return response.json();
+            })
+            .then(parsedResponse => {
+                dispatch(dispatchCurrentPositionData(parsedResponse));
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            });
     };
 }
 

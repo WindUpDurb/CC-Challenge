@@ -8,6 +8,7 @@ const User = require("../models/user");
 const Employer = require("../models/employer");
 const S3 = require ('../models/s3-storage');
 const Video = require("../models/video");
+const Job = require("../models/jobs");
 
 const upload = multer({storage: multer.memoryStorage()});
 
@@ -25,7 +26,7 @@ router.post("/loginEmployer", (request, response) => {
     });
 });
 
-router.post("/uploadQuestionToAWS", upload.single("newVideo"), (request, response) => {
+router.post("/uploadQuestionToAWS/:jobID/:employerID", upload.single("newVideo"), (request, response) => {
     S3.upload(request.file, (error, uploadedVideo) => {
         if (error) response.status(400).send(error);
         let videoToSave = {
@@ -33,18 +34,19 @@ router.post("/uploadQuestionToAWS", upload.single("newVideo"), (request, respons
             awsKey: uploadedVideo.Key,
             etag: uploadedVideo.ETag,
             employerQuestion: true,
-            uploadedBy: request.body._id
+            uploadedBy: request.params.employedID
         };
         Video.saveInDB(videoToSave, (error, savedVideo) => {
             if (error) response.status(400).send(error);
             let toUpdateEmployer = {
                 videoId :savedVideo._id,
-                jobId: request.body.jobId
+                jobId: request.params.jobID
             };
             Employer.addVideoQuestion(toUpdateEmployer, (error, savedUser) => {
-                console.log("Error here: ", error);
-                console.log("Saved user: ", savedUser);
-                response.send();
+                Job.addVideoQuestion(request.params.jobID, savedVideo._id, (error, savedJob) => {
+                    if (error) response.status(400).send(error);
+                    response.send({savedVideo, savedUser, savedJob});
+                });
             });
         });
     });

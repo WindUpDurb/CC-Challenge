@@ -14,6 +14,11 @@ export default function jobListingsReducer (state = initialState.jobListings, ac
             return (
                 Object.assign({}, state, {currentEmployerPage: action.currentEmployer})
             );
+        
+        case types.JOB_DATA_RECEIVED:
+            return (
+                Object.assign({}, state, {currentPositionData: action.positionData})
+            );
         default:
             return state;
     }

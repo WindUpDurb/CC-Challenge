@@ -14,7 +14,7 @@ export function retrieveFromAWS() {
     };
 }
 
-export function uploadToAWS(file) {
+export function uploadToAWS(file, jobId, employerId) {
     return function (dispatch) {
         let data = new FormData();
         //the first argument will be the field name
@@ -26,8 +26,8 @@ export function uploadToAWS(file) {
             mode: "cors",
             body: data
         };
-        console.log("Options.body: ", options.body);
-        return fetch("/api/users/uploadToAWS", options)
+        console.log("here: ", `/api/users/uploadQuestionToAWS/${jobId}/${employerId}`)
+        return fetch(`/api/users/uploadQuestionToAWS/${jobId}/${employerId}`, options)
             .then(response => {
                 console.log("Response", response);
             })

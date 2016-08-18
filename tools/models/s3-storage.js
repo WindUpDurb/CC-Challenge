@@ -19,8 +19,6 @@ const S3Tasks = {
             Body: videoObject.buffer,
             ContentType: "video/webm"
         };
-
-        console.log("Params: ", params);
         //if issues, try the initial putObject method instead of upload
         s3.upload(params, function (error, result) {
             if (error) return callback(error);

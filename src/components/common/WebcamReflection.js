@@ -17,7 +17,7 @@ class WebcamReflection extends React.Component {
             recordingObject: null,
             buffer: null,
             dataUrl: null,
-            readerResult: "https://covalent-careers-test.s3.amazonaws.com/d4b70ece-c66e-4df1-96c6-8af09dec967b.blob",
+            readerResult: null,
             blobToUpload: null
         };
 

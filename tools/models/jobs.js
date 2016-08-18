@@ -21,6 +21,16 @@ let jobSchema = new mongoose.Schema({
 });
 
 
+jobSchema.statics.addVideoQuestion = function (jobId, videoId, callback) {
+    Job.findById(jobId, (error, databaseJob) => {
+        if (error || !databaseJob) return callback(error || {error: "No job found"});
+        databaseJob.videoQuestions.push(videoId);
+        databaseJob.save((error, savedJob) => {
+            callback(error, savedJob);
+        });
+    });
+};
+
 let Job = mongoose.model("Job", jobSchema);
 
 let initialData = [

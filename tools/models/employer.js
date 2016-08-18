@@ -29,8 +29,8 @@ let employerSchema = new mongoose.Schema({
 employerSchema.statics.addVideoQuestion = (uploadedData, callback) => {
     Employer.findOne({email: "employer@employer.com"}, (error, databaseUser) => {
         if (error || !databaseUser) return callback(error || {error: "Login Information is Invalid."});
-        let indexOfJobs = databaseUser.jobs.findIndex(element => element.jobId === uploadedData.jobId);
-        if (indexOfJobs === -1) return ({error: "Job isn't found."});
+        let indexOfJobs = databaseUser.jobs.findIndex(element => element.jobId == uploadedData.jobId);
+        if (indexOfJobs === -1) return callback({error: "Job isn't found."});
         databaseUser.jobs[indexOfJobs].videoQuestion = uploadedData.videoId;
         databaseUser.save((error, savedUser) => {
             return callback(error, savedUser);

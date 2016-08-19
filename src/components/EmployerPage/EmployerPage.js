@@ -6,6 +6,7 @@ import {NavbarPresentation} from "../common/NavbarPresentation";
 import {EmployerPagePresentation} from "./EmployerPagePresentation";
 import {CultureFitSection} from "./CultureFitSection";
 import {AnswerVideoSection} from "./AnswerVideoSection";
+import {EmployerVideoSection} from "./EmployerVideoSection";
 import * as JobListActions from "../../actions/JobListActions";
 import * as UserActions from "../../actions/UserActions";
 import * as WebcamAndVideoActions from "../../actions/WebcamAndVideoActions";
@@ -17,7 +18,8 @@ class EmployerPage extends React.Component {
         super(props);
         this.state = {
             currentSection: "details",
-            watched: false
+            watched: false,
+            newEmployerVideo: false
         };
 
         this.changeSection = this.changeSection.bind(this);
@@ -25,10 +27,11 @@ class EmployerPage extends React.Component {
         this.beginQuestion = this.beginQuestion.bind(this);
         this.watchQuestion = this.watchQuestion.bind(this);
         this.initiateResponse = this.initiateResponse.bind(this);
+        this.addNewVideo = this.addNewVideo.bind(this);
     }
 
     componentWillMount() {
-        this.props.JobListActions.hydrateEmployerPage(this.props.employerId);
+        this.props.JobListActions.hydrateEmployerPage(this.props.jobId);
     }
 
     changeSection(event) {
@@ -54,17 +57,35 @@ class EmployerPage extends React.Component {
         this.props.WebcamAndVideoActions.requestWebcamPermissionAndOpen();
     }
 
+    addNewVideo() {
+        this.setState({newEmployerVideo: true});
+        this.initiateResponse();
+    }
+
     render() {
         let currentSection;
         if (this.state.currentSection === "details") currentSection = <EmployerPagePresentation />;
         if (this.state.currentSection === "cultureFit") currentSection = (
-            <CultureFitSection respondToQuestion={this.respondToQuestion} interviewQuestion={this.props.interviewQuestion} />
+            <CultureFitSection respondToQuestion={this.respondToQuestion}
+                               employer={this.props.employer} interviewQuestion={this.props.interviewQuestion}
+                               addNewVideo={this.addNewVideo} videoResponse={this.props.videoResponse}/>
         );
-        if (this.props.videoQuestion) currentSection = (
+        if (this.props.videoQuestion && !this.props.employer) currentSection = (
             <AnswerVideoSection beginQuestion={this.beginQuestion} fetchedLink={this.props.videoQuestion}
                                 currentSection={this.state.currentSection} videoLink={this.state.videoLink}
                                 watchQuestion={this.watchQuestion} watched={this.state.watched}
-                                initiateResponse={this.initiateResponse} streamObject={this.props.streamObject}/>
+                                initiateResponse={this.initiateResponse} streamObject={this.props.streamObject}
+                                userId={this.props.userId} jobId={this.props.jobId}/>
+        );
+        
+        if (this.props.videoQuestion && this.props.employer) currentSection = (
+            <EmployerVideoSection newVideo={this.state.newEmployerVideo} watchQuestion={this.watchQuestion} fetchedLink={this.props.videoQuestion}/>
+        );
+        if (this.props.employer && this.state.newEmployerVideo) currentSection = (
+            <EmployerVideoSection getPermission={this.initiateResponse} newVideo={this.state.newEmployerVideo}
+                                  streamObject={this.props.streamObject} fetchedLink={this.props.videoQuestion}
+                                  employerId={this.props.employerId} jobId={this.props.jobId}
+                                  watchQuestion={this.watchQuestion}/>
         );
         return (
             <div>
@@ -88,27 +109,41 @@ class EmployerPage extends React.Component {
 }
 
 EmployerPage.propTypes = {
-    employerId: PropTypes.string.isRequired,
+    employerId: PropTypes.string,
     videoQuestion: PropTypes.string,
+    userId: PropTypes.string,
+    interviewQuestion: PropTypes.string,
+    jobId: PropTypes.string,
+    videoResponse: PropTypes.string,
     JobListActions: PropTypes.object.isRequired,
     WebcamAndVideoActions: PropTypes.object.isRequired,
     UserActions: PropTypes.object.isRequired,
     currentEmployerPage: PropTypes.object,
-    streamObject: PropTypes.object
+    streamObject: PropTypes.object,
+    employer: PropTypes.bool
 };
 
 function mapStateToProps(state, ownProps) {
-    let currentEmployerPage, interviewQuestion, videoQuestion, streamObject;
+    let currentEmployerPage, interviewQuestion, videoQuestion,
+        streamObject, employerId, userId, employer, videoResponse;
+    if (state.activeUser && state.activeUser.employer) employerId = state.activeUser._id;
     if (state.webcamAndVideo && state.webcamAndVideo.openStream) streamObject = state.webcamAndVideo.openStream;
     if (state.webcamAndVideo && state.webcamAndVideo.fetchedLink) videoQuestion = state.webcamAndVideo.fetchedLink;
     if (state.jobListings && state.jobListings.currentEmployerPage) currentEmployerPage = state.jobListings.currentEmployerPage;
-    if (currentEmployerPage && currentEmployerPage.videoQuestions.length) interviewQuestion = [...currentEmployerPage.videoQuestions];
+    if (currentEmployerPage && currentEmployerPage.videoQuestions) interviewQuestion = currentEmployerPage.videoQuestions;
+    if (state.activeUser && state.activeUser._id) userId = state.activeUser._id;
+    if (state.activeUser && state.activeUser.employer) employer = true;
+    if (currentEmployerPage && currentEmployerPage.videoResponses) videoResponse = currentEmployerPage.videoResponses;
     return {
-        employerId: ownProps.params.employer,
+        employerId,
         currentEmployerPage,
         interviewQuestion,
         videoQuestion,
-        streamObject
+        streamObject,
+        videoResponse,
+        userId,
+        employer,
+        jobId: ownProps.params.employer
     };
 }
 

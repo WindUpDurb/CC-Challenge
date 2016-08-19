@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {NavbarPresentation} from "../common/NavbarPresentation";
 import {DashboardHeader} from "../Dashboard/DashboardHeader";
-import {ListedOpenPosition} from "../common/ListedOpenPosition";
+import {ListedJob} from "../common/ListedJob";
 import * as UserActions from "../../actions/UserActions";
 import * as JobListActions from "../../actions/JobListActions";
 
@@ -22,7 +22,7 @@ class EmployerDashboardPage extends React.Component {
     }
 
     componentWillMount() {
-
+        this.props.JobListActions.fetchJobList();
     }
 
 
@@ -33,7 +33,7 @@ class EmployerDashboardPage extends React.Component {
 
     render() {
         let openPositions;
-        if (this.props.openPositions) openPositions = this.props.openPositions.map((item, index) =><ListedOpenPosition job={item} key={index}/>);
+       if (this.props.openPositions) openPositions = this.props.openPositions.map((item, index) =><ListedJob employer job={item} key={index}/>);
         return (
             <div>
                 <NavbarPresentation
@@ -72,7 +72,7 @@ EmployerDashboardPage.propTypes = {
 function mapStateToProps(state, ownProps) {
     let activeUser, openPositions;
     if (state.activeUser) activeUser = state.activeUser;
-    if (state.activeUser && state.activeUser.jobs.length) openPositions = state.activeUser.jobs;
+    if (state.jobListings && state.jobListings.currentListings) openPositions = state.jobListings.currentListings;
     return {
         activeUserBool: !!state.activeUser,
         employer: !!state.activeUser && !!state.activeUser.employer,

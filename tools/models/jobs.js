@@ -14,17 +14,31 @@ let jobSchema = new mongoose.Schema({
     contract_type: {type: String},
     job_title: {type: String},
     image: {type: String},
-    videoQuestions: [{
+    videoQuestions: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Videos'
-    }]
+    },
+    videoResponses: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Videos'
+    }
 });
 
 
 jobSchema.statics.addVideoQuestion = function (jobId, videoId, callback) {
     Job.findById(jobId, (error, databaseJob) => {
         if (error || !databaseJob) return callback(error || {error: "No job found"});
-        databaseJob.videoQuestions.push(videoId);
+        databaseJob.videoQuestions = videoId;
+        databaseJob.save((error, savedJob) => {
+            callback(error, savedJob);
+        });
+    });
+};
+
+jobSchema.statics.addVideoResponse = function (jobId, videoId, callback) {
+    Job.findById(jobId, (error, databaseJob) => {
+        if (error || !databaseJob) return callback(error || {error: "No job found"});
+        databaseJob.videoResponses = videoId;
         databaseJob.save((error, savedJob) => {
             callback(error, savedJob);
         });

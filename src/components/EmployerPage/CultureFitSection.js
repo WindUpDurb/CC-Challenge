@@ -2,13 +2,14 @@
 
 import React, {PropTypes} from "react";
 import {InterviewQuestionDiv} from "../common/InterviewQuestionDiv";
+import {NonEmployerCultureFit} from "./NonEmployerCultureFit";
+import {EmployerCultureFit} from "./EmployerCultureFit";
 
-export const CultureFitSection = ({respondToQuestion, interviewQuestion}) => {
+export const CultureFitSection = ({respondToQuestion, addNewVideo, employer, videoResponse, interviewQuestion}) => {
 
-    let question;
-
-    if (interviewQuestion) question = <InterviewQuestionDiv respondToQuestion={respondToQuestion} questionId={interviewQuestion[0]} questionNumber={1}/>
-
+    let preliminaryScreen;
+    if (!employer) preliminaryScreen = <NonEmployerCultureFit respondToQuestion={respondToQuestion} interviewQuestions={interviewQuestion}/>;
+    if (employer) preliminaryScreen = <EmployerCultureFit videoResponse={videoResponse} addNewVideo={addNewVideo} respondToQuestion={respondToQuestion} interviewQuestion={interviewQuestion}/>;
     return (
       <div className="container">
           <div className="row">
@@ -41,36 +42,17 @@ export const CultureFitSection = ({respondToQuestion, interviewQuestion}) => {
                   <h3>Preliminary Video Screening</h3>
               </div>
           </div>
-          <div style={{paddingTop: "2%"}}  className="row text-center">
-              <h3>Dr. John Doe has provided a preliminary video screening</h3>
-          </div>
-          <div className="row">
-              <div className="col-md-5">
-                  <span>This is an opportunity for you to make an impressionable introduction</span>
-                  <br/>
-                  <span>Show how interested you are in the position</span>
-                  <br/>
-                  <span>Succintly </span>
-              </div>
-          </div>
-          <div style={{paddingTop: "2%"}} className="row">
-              <div className="col-md-5 col-md-offset-3">
-                  <div style={{backgroundColor: "white"}}  className="well">
-                      <img src="/statics/checked.png"/>
-                      <div className="text-center">
-                          <span>Dr. John Doe's Introduction</span>
-                          <label className="cultureFitQues"><span className="strikeThrough">Watch and Respond</span></label>
-                      </div>
-                  </div>
-                  {question}
-              </div>
-          </div>
+          {preliminaryScreen}
+
       </div>
     );
 
 };
 
 CultureFitSection.propTypes = {
-    interviewQuestion: PropTypes.array,
-    respondToQuestion: PropTypes.func
+    videoResponse: PropTypes.string,
+    interviewQuestion: PropTypes.string,
+    respondToQuestion: PropTypes.func,
+    addNewVideo: PropTypes.func,
+    employer: PropTypes.bool
 };

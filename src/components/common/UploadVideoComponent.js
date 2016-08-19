@@ -92,7 +92,12 @@ class UploadVideoComponent extends React.Component {
 
 
     uploadToAWS() {
-        this.props.ServerActions.uploadToAWS(this.state.blobToUpload, this.props.jobId, this.props.employerId);
+        if (this.props.employerId) {
+            this.props.ServerActions.uploadToAWS(this.state.blobToUpload, this.props.jobId, this.props.employerId);
+        }
+        if (this.props.userId) {
+            this.props.ServerActions.uploadToAWSUser(this.state.blobToUpload, this.props.jobId, this.props.userId);
+        }
     }
 
     closeStream() {
@@ -146,18 +151,21 @@ UploadVideoComponent.propTypes = {
     streamingObject: PropTypes.object.isRequired,
     UserActions: PropTypes.object.isRequired,
     employerId: PropTypes.string,
+    userId: PropTypes.string,
     jobId: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
-    let streamingObject, employerId, jobId;
+    let streamingObject, employerId, jobId, userId;
     if (state.webcamAndVideo && state.webcamAndVideo.openStream) streamingObject = state.webcamAndVideo.openStream;
     if (ownProps.employerId) employerId = ownProps.employerId;
     if (ownProps.jobId) jobId = ownProps.jobId;
+    if (ownProps.userId) userId = ownProps.userId;
     return {
         streamingObject,
         jobId,
-        employerId
+        employerId,
+        userId
     };
 }
 

@@ -18,10 +18,10 @@ let employerSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Videos"
         },
-        videoResponseReceived: [{
+        videoResponseReceived: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Videos"
-        }]
+        }
 
     }]
 });
@@ -58,12 +58,12 @@ let Employer = mongoose.model("Employer", employerSchema);
     name: "Dr. John Doe",
     jobs: [
         {
-            jobId: "57b5420d91411efb76f56aca",
+            jobId: "57b6625199fe8b2d3add80dd",
             jobTitle: "Optometrist",
             organization: "Optix Family Eye Care"
         },
         {
-            jobId: "57b5420d91411efb76f56acb",
+            jobId: "57b6625199fe8b2d3add80de",
             jobTitle: "Optician",
             organization: "Optix Family Eye Care"
         }

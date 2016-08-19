@@ -7,7 +7,7 @@ let userSchema = new mongoose.Schema({
     email: {type: String},
     password: {type: String},
     name: {type: String},
-    applications: [{
+    applications: {
         jobId: {
             type: mongoose.Schema.Types.ObjectId
         },
@@ -15,8 +15,18 @@ let userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Videos"
         }
-    }]
+    }
 });
+
+userSchema.statics.addVideoQuestion = (uploadedData, callback) => {
+    User.findOne({email: "user@user.com"}, (error, databaseUser) => {
+        if (error || !databaseUser) return callback(error || {error: "Login Information is Invalid."});
+        databaseUser.applications.videoResponse = uploadedData.videoId;
+        databaseUser.save((error, savedUser) => {
+            return callback(error, savedUser);
+        });
+    });
+};
 
 
 userSchema.statics.authenticate = (loginData, callback) => {

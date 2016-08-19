@@ -52,11 +52,28 @@ router.post("/uploadQuestionToAWS/:jobID/:employerID", upload.single("newVideo")
     });
 });
 
-router.post("/uploadResponseToAWS", upload.single("newVideo"), (request, response) => {
-    S3.upload(request.file, (error, results) => {
+router.post("/uploadResponseToAWS/:jobID/:userID", upload.single("newVideo"), (request, response) => {
+    S3.upload(request.file, (error, uploadedVideo) => {
         if (error) response.status(400).send(error);
-        console.log("Results: ", results);
-        response.send();
+        let videoToSave = {
+            awsLink: uploadedVideo.Location,
+            awsKey: uploadedVideo.Key,
+            etag: uploadedVideo.ETag,
+            uploadedBy: request.params.userID
+        };
+        Video.saveInDB(videoToSave, (error, savedVideo) => {
+            if (error) response.status(400).send(error);
+            let toUpdateUser = {
+                videoId: savedVideo._id,
+                jobId: request.params.jobID
+            };
+            User.addVideoQuestion(toUpdateUser, (error, savedUser) => {
+                Job.addVideoResponse(request.params.jobID, savedVideo._id, (error, savedJob) => {
+                    if (error) response.status(400).send(error);
+                    response.send({savedVideo, savedUser, savedJob});
+                });
+            });
+        });
     });
 });
 

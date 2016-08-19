@@ -4,7 +4,7 @@ import React, {PropTypes} from "react";
 import {Link} from "react-router";
 import {daysFromToday} from "../../actions/functionTools";
 
-export const ListedJob = ({job}) => {
+export const ListedJob = ({job, employer}) => {
     let image, postingTitle, location, matchScore, applicants, daysFromNow;
     if (job && job.image) image = job.image;
     if (job && job.job_title) postingTitle = job.job_title;
@@ -12,10 +12,10 @@ export const ListedJob = ({job}) => {
     if (postingTitle && job.contract_type === "FT") postingTitle = `${postingTitle} - Full Time`;
     if (job && job.organization) location = job.organization;
     if (location && job.location) location = `${location} in ${job.location}`;
-    if (job && job.score && job.score >= 90) matchScore = (
+    if (job && job.score && job.score >= 90 && !employer) matchScore = (
         <span className="matchScore text-success bg-success roundedCorners">{`${job.score}% Match`}</span>
     );
-    if (job && job.score && job.score < 90) matchScore = (
+    if (job && job.score && job.score < 90 && !employer) matchScore = (
         <span className="matchScore text-info bg-info roundedCorners">{`${job.score}% Match`}</span>
     );
     if (job && job.applicants) applicants = `${job.applicants}+ Applicants`;
@@ -40,5 +40,6 @@ export const ListedJob = ({job}) => {
 };
 
 ListedJob.propTypes = {
-    job: PropTypes.object
+    job: PropTypes.object,
+    employer: PropTypes.bool
 };

@@ -3,7 +3,8 @@
 import React, {PropTypes} from "react";
 import UploadVideoComponent from "../common/UploadVideoComponent";
 
-export const AnswerVideoSection = ({beginQuestion, streamObject, watched, respond, watchQuestion, initiateResponse, currentSection, fetchedLink}) => {
+export const AnswerVideoSection = ({beginQuestion, streamObject, watched, respond,
+    watchQuestion, initiateResponse, currentSection, fetchedLink, userId, jobId}) => {
     let begin = () => beginQuestion(fetchedLink);
     let button;
     if (currentSection === "response") button = <button onClick={watchQuestion} className="btn btn-lg">Watch Question</button>;
@@ -40,7 +41,7 @@ export const AnswerVideoSection = ({beginQuestion, streamObject, watched, respon
                 <div className="text-center">
                     <h3>For Question 1</h3>
                 </div>
-                <UploadVideoComponent />
+                <UploadVideoComponent userId={userId} jobId={jobId} />
             </div>
         );
     } else {
@@ -79,6 +80,8 @@ AnswerVideoSection.propTypes = {
     initiateResponse: PropTypes.func,
     currentSection: PropTypes.string,
     fetchedLink: PropTypes.string,
+    jobId: PropTypes.string,
+    userId: PropTypes.string,
     respond: PropTypes.bool,
     watched: PropTypes.bool,
     streamObject: PropTypes.object

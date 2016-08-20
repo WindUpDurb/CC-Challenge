@@ -10,20 +10,20 @@ export const EmployerPagePresentation = () => {
                 <div className="col-md-5">
                     <h2>Pros</h2>
                     <div style={{backgroundColor: "white"}}  className="well">
-                        <h4>You have all of the required experience.</h4>
-                        <h4>Your schedules match up very well.</h4>
+                        <h4><img src="/statics/check.png" alt=""/>  You have all of the required experience.</h4>
+                        <h4><img src="/statics/check.png" alt=""/>  Your schedules match up very well.</h4>
                     </div>
                 </div>
                 <div className="col-md-5 col-md-offset-1">
                     <h2>Cons</h2>
                     <div style={{backgroundColor: "white"}}  className="well">
-                        <h4>The practice culture is a good fit, but not great.</h4>
+                        <h4><img src="/statics/minus.png" /> The practice culture is a good fit, but not great.</h4>
                     </div>
                 </div>
             </div>
 
             <div className="row">
-                <div className="col-md-3">
+                <div className="col-md-4">
                     <h2>Position Details</h2>
                     <table className="table table-bordered table-striped table-hover">
                         <tbody>
@@ -48,10 +48,7 @@ export const EmployerPagePresentation = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="col-md-3 col-md-offset-1">
-                    <h2>Location</h2>
-                </div>
-                <div className="col-md-3 col-md-offset-1">
+                <div className="col-md-4 col-md-offset-2">
                     <h2>Schedule</h2>
                     <table className="table">
                         <tbody>

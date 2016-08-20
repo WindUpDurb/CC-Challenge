@@ -19,3 +19,4 @@ export const STREAM_OBJECT_CREATED = "AND_WE_ARE_LIVE";
 export const STREAM_CLOSE = "AND_WE_ARE_CLOSED";
 export const AWS_LINK_RECEIVED = "GOT_THE_LINK";
 export const CLEAR_ACTIVE_LINK = "LINK_OUT";
+export const CLEAR_STATE = "CLEAR_STATE";

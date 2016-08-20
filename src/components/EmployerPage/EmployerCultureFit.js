@@ -12,8 +12,22 @@ export const EmployerCultureFit = ({interviewQuestion, addNewVideo, videoRespons
     );
     return (
         <div>
-            <div style={{paddingTop: "2%"}}  className="row text-center">
-                <h3>Dr. John Doe, here are your video screenings to review</h3>
+            <div style={{paddingTop: "3%"}}>
+                <img style={{marginRight: "1%"}} src="/statics/speech-bubble.png"/>
+                <span className="encouragementText">Filter out less interested candidates</span>
+                <br/><br/>
+                <img style={{marginRight: "1%"}} src="/statics/speech-bubble.png"/>
+                <span className="encouragementText">Candidates who respond show greater interest and commitment</span>
+                <br/><br/>
+                <img style={{marginRight: "1%"}} src="/statics/speech-bubble.png"/>
+                <span className="encouragementText">Better screen candidates</span>
+                <br/><br/>
+                <img style={{marginRight: "1%"}} src="/statics/speech-bubble.png"/>
+                <span className="encouragementText">Candidate's body language, judgement, professionalism can be better gauged</span>
+                <br/><br/>
+                <img style={{marginRight: "1%"}} src="/statics/speech-bubble.png"/>
+                <span className="encouragementText">Round out your job listing with your personal introduction</span>
+                <br/><br/>
             </div>
             <div style={{paddingTop: "2%"}} className="row">
                 <div className="col-md-5 col-md-offset-3">

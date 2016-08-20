@@ -22,6 +22,12 @@ export function dispatchClearVideoLink() {
     };
 }
 
+export function dispatchClearState() {
+    return {
+        type: types.CLEAR_STATE
+    };
+}
+
 export function dispatchAWSLink(link) {
     return {
         type: types.AWS_LINK_RECEIVED,
@@ -39,6 +45,12 @@ export function closeStream() {
 export function clearVideoLinkState() {
     return function (dispatch) {
         dispatch(dispatchClearVideoLink());
+    };
+}
+
+export function clearState() {
+    return function (dispatch) {
+        dispatch(dispatchClearState());
     };
 }
 
@@ -75,22 +87,3 @@ export function requestWebcamPermissionAndOpen() {
             });
     };
 }
-
-// export function beginRecording() {
-//     return function (dispatch) {
-//         let options = {mimeType: "video/webm"};
-//         let recorder = new MediaRecorder(this.state.streamObject, options);
-//         recorder.ondataavailable = this.onDataAvailable;
-//         recorder.start();
-//         this.setState({recordingObject: recorder});
-//     };
-// }
-//
-// function onDataAvailable(event) {
-//     if(event.data) {
-//         let buffer = [];
-//         if (this.state.buffer) buffer = [...this.state.buffer];
-//         buffer.push(event.data);
-//         this.setState({buffer});
-//     }
-// }

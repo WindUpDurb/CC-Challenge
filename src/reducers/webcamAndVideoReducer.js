@@ -26,7 +26,10 @@ export default function webcamAndVideoReducer(state = initialState.webcamAndVide
             return (
                 Object.assign({}, state, {fetchedLink: null})
             );
-        
+
+        case types.CLEAR_STATE:
+            return null;
+
         default:
             return state;
     }

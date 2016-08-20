@@ -108,21 +108,16 @@ class UploadVideoComponent extends React.Component {
     render() {
         let button, recording;
         if (this.state.recording) recording = <PulsingDot/>;
-        if (this.state.button === "begin") button = <button onClick={this.beginRecording} className="btn btn-lg">Begin Recording</button>;
-        if (this.state.button === "end") button = <button onClick={this.endRecording} className="btn btn-lg">End Recording</button>;
+        if (this.state.button === "begin") button = <button onClick={this.beginRecording} className="uploadInterviewQuestionB btn btn-lg">Begin Recording</button>;
+        if (this.state.button === "end") button = <button onClick={this.endRecording} className="uploadInterviewQuestionB btn btn-lg">End Recording</button>;
         if (this.state.button === "post") button = (
             <div>
-                <button onClick={this.playFromNewlyRecorded} className="btn btn-lg">Review Recording</button>
-                <button onClick={this.uploadToAWS} className="btn btn-lg">Save Recording</button>
+                <button onClick={this.playFromNewlyRecorded} className="uploadInterviewQuestionB btn btn-lg">Review Recording</button>
+                <button style={{marginLeft: "2%"}} onClick={this.uploadToAWS} className="uploadInterviewQuestionB btn btn-lg">Save Recording</button>
             </div>
         );
         return (
             <div>
-                    <div className="row">
-                        <div className="col-md-1 col-md-offset-9">
-                            <img onClick={this.closeStream} className="closeButton" src="/statics/close.png"/>
-                        </div>
-                    </div>
                     <div className="row pulsingDotRow">
                         <div className="col-md-3">
                             {recording}

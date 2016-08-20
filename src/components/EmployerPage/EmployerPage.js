@@ -28,6 +28,8 @@ class EmployerPage extends React.Component {
         this.watchQuestion = this.watchQuestion.bind(this);
         this.initiateResponse = this.initiateResponse.bind(this);
         this.addNewVideo = this.addNewVideo.bind(this);
+        this.signOut = this.signOut.bind(this);
+
     }
 
     componentWillMount() {
@@ -36,6 +38,7 @@ class EmployerPage extends React.Component {
 
     changeSection(event) {
         this.setState({currentSection: event.target.name});
+        this.props.WebcamAndVideoActions.clearState();
     }
 
     respondToQuestion(questionId){
@@ -60,6 +63,10 @@ class EmployerPage extends React.Component {
     addNewVideo() {
         this.setState({newEmployerVideo: true});
         this.initiateResponse();
+    }
+
+    signOut() {
+        this.props.UserActions.signOut();
     }
 
     render() {
@@ -89,7 +96,8 @@ class EmployerPage extends React.Component {
         );
         return (
             <div>
-                <NavbarPresentation/>
+                <NavbarPresentation signOut={this.signOut}
+                                    activeUser={this.props.activeUserBool}/>
                 <div className="headerStyle"></div>
                 <div style={{marginTop: "2%"}} className="container">
                     <div className="row">
@@ -120,6 +128,7 @@ EmployerPage.propTypes = {
     UserActions: PropTypes.object.isRequired,
     currentEmployerPage: PropTypes.object,
     streamObject: PropTypes.object,
+    activeUserBool: PropTypes.bool,
     employer: PropTypes.bool
 };
 
@@ -143,6 +152,7 @@ function mapStateToProps(state, ownProps) {
         videoResponse,
         userId,
         employer,
+        activeUserBool: !!state.activeUser,
         jobId: ownProps.params.employer
     };
 }

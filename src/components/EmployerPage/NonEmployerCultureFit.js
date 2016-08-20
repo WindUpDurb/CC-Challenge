@@ -9,16 +9,16 @@ export const NonEmployerCultureFit = ({interviewQuestions, respondToQuestion}) =
     return (
         <div>
             
-            <div className="row">
-                <div className="col-md-5">
-                    <span>This is an opportunity for you to make an impressionable introduction</span>
-                    <br/>
-                    <span>Show how interested you are in the position</span>
-                    <br/>
-                    <span>Succintly </span>
+            <div style={{paddingTop: "2%"}} className="row">
+                <div className="col-md-8">
+                    <img style={{marginRight: "1%"}} src="/statics/speech-bubble.png"/>
+                    <span className="encouragementText">This is an opportunity for you to make an impressionable introduction</span>
+                    <br/><br/>
+                    <img style={{marginRight: "1%"}} src="/statics/speech-bubble.png"/>
+                    <span className="encouragementText">Show your prospective employer how interested you are in the position</span>
                 </div>
             </div>
-            <div style={{paddingTop: "2%"}} className="row">
+            <div style={{paddingTop: "3%"}} className="row">
                 <div className="col-md-5 col-md-offset-3">
                     <div style={{backgroundColor: "white"}}  className="well">
                         <img src="/statics/checked.png"/>

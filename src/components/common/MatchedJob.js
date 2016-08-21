@@ -38,6 +38,6 @@ export const MatchedJob = ({job}) => {
     );
 };
 
-ListedJob.propTypes = {
+MatchedJob.propTypes = {
     job: PropTypes.object
 };

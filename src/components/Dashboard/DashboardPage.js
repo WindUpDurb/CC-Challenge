@@ -10,7 +10,6 @@ import {DashboardHeader} from "./DashboardHeader";
 import {filterJobs} from "../../actions/functionTools";
 import * as UserActions from "../../actions/UserActions";
 import * as JobListActions from "../../actions/JobListActions";
-import * as BlogResourcesActions from "../../actions/BlogResourcesActions";
 
 
 class DashboardPage extends React.Component {
@@ -38,7 +37,7 @@ class DashboardPage extends React.Component {
 
     componentWillMount() {
         this.props.JobListActions.fetchJobList();
-        this.props.BlogResourcesActions.fetchBlogResources();
+        //this.props.BlogResourcesActions.fetchBlogResources();
     }
 
 
@@ -90,8 +89,7 @@ class DashboardPage extends React.Component {
                videoLink={this.state.videoLink}
                showVideo={this.showVideo}
                 currentMediaSection={this.state.mediaSection}
-                changeMediaSection={this.changeMediaSection}
-                blogResources={this.props.blogResources}/>
+                changeMediaSection={this.changeMediaSection}/>
         );
 
         return (
@@ -119,7 +117,6 @@ DashboardPage.propTypes = {
     BlogResourcesActions: PropTypes.object,
     UserActions: PropTypes.object,
     jobListings: PropTypes.array,
-    blogResources: PropTypes.array,
     activeUserBool: PropTypes.bool,
     activeUser: PropTypes.object
 };
@@ -127,11 +124,10 @@ DashboardPage.propTypes = {
 function mapStateToProps(state, ownProps) {
     let jobListings, blogResources, activeUser;
     if (state.jobListings && state.jobListings.currentListings) jobListings = [...state.jobListings.currentListings];
-    if (state.blogResources) blogResources = [...state.blogResources];
+    //if (state.blogResources) blogResources = [...state.blogResources];
     if (state.activeUser) activeUser = state.activeUser;
     return {
         jobListings,
-        blogResources,
         activeUserBool: !!state.activeUser,
         activeUser
     };

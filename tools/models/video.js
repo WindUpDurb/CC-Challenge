@@ -1,7 +1,6 @@
 "use strict";
 
 let mongoose = require("mongoose");
-let bcrypt = require("bcrypt");
 
 let videoSchema = new mongoose.Schema({
     awsLink: {type: String},

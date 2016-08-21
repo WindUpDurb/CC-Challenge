@@ -1,7 +1,6 @@
 "use strict";
 
 let mongoose = require("mongoose");
-let bcrypt = require("bcrypt");
 
 let employerSchema = new mongoose.Schema({
     email: {type: String},

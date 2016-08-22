@@ -20,12 +20,13 @@ const compiler = webpack(config);
 /* eslint-disable no-console */
 
 const httpsOptions = {
-    key: fs.readFileSync("../CCCprivate.key"),
-    certificate: fs.readFileSync("../CCCcertificate.pem")
+    key: fs.readFileSync(path.join(__dirname, "../../CCCprivate.key")),
+    cert: fs.readFileSync(path.join(__dirname, "../../CCCcertificate.pem"))
 };
 
 
-httpApp.set("port", 80);
+httpApp.set("port", 2880);
+app.set("port", 2443);
 
 mongoose.connect(MONGOURL, function (error) {
     console.log(error || `Connected to MongoDB at ${MONGOURL}`);

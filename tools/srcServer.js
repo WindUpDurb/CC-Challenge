@@ -19,13 +19,14 @@ const MONGOURL = process.env.MONGODB_URI || "mongodb://windupdurb-admin-remote:S
 const compiler = webpack(config);
 /* eslint-disable no-console */
 
-// const httpsOptions = {
-//     key: fs.readFileSync(path.join(__dirname, "../../CCCprivate.key")),
-//     certificate: fs.readFileSync(path.join(__dirname, "../../CCCcertificate.pem"))
-// };
+const httpsOptions = {
+    key: fs.readFileSync(path.join(__dirname, "../../CCCprivate.key")),
+    certificate: fs.readFileSync(path.join(__dirname, "../../CCCcertificate.pem"))
+};
 
 
-//httpApp.set("port", 80);
+httpApp.set("port", 80);
+
 
 mongoose.connect(MONGOURL, function (error) {
     console.log(error || `Connected to MongoDB at ${MONGOURL}`);
@@ -55,14 +56,14 @@ app.use("/api", require("./routes/api"));
 
 app.use("*", require("./routes/index"));
 
-// http.createServer(httpApp).listen(httpApp.get('port'), function() {
-//     console.log('Express HTTP server listening on port ' + httpApp.get('port'));
-// });
+http.createServer(httpApp).listen(httpApp.get('port'), function() {
+    console.log('Express HTTP server listening on port ' + httpApp.get('port'));
+});
 
-// https.createServer(httpsOptions, app).listen(app.get('port'), function() {
-//     console.log('Express HTTPS server listening on port ' + app.get('port'));
-// });
+https.createServer(httpsOptions, app).listen(app.get('port'), function() {
+    console.log('Express HTTPS server listening on port ' + app.get('port'));
+});
 
- app.listen(PORT, function(err) {
-     console.log(err || `Listening on port ${PORT}`);
- });
+ // app.listen(PORT, function(err) {
+ //     console.log(err || `Listening on port ${PORT}`);
+ // });

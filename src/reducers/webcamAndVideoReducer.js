@@ -29,6 +29,7 @@ export default function webcamAndVideoReducer(state = initialState.webcamAndVide
 
         case types.CLEAR_STATE:
             return null;
+        
 
         default:
             return state;

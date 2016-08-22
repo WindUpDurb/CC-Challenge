@@ -19,10 +19,12 @@ class EmployerPage extends React.Component {
         this.state = {
             currentSection: "details",
             watched: false,
-            newEmployerVideo: false
+            newEmployerVideo: false,
+            openStream: null
         };
 
         this.changeSection = this.changeSection.bind(this);
+        this.clearLocalState = this.clearLocalState.bind(this);
         this.respondToQuestion = this.respondToQuestion.bind(this);
         this.beginQuestion = this.beginQuestion.bind(this);
         this.watchQuestion = this.watchQuestion.bind(this);
@@ -57,7 +59,24 @@ class EmployerPage extends React.Component {
     }
 
     initiateResponse() {
-        this.props.WebcamAndVideoActions.requestWebcamPermissionAndOpen();
+        let setState = stream => this.setState({openStream: stream});
+        let constraints = {
+            audio: true,
+            video: {
+                height: {ideal: 720},
+                width: {ideal: 1280}
+            }
+        };
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(stream => {
+                setState(stream);
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            });
+
+
+
     }
 
     addNewVideo() {
@@ -69,8 +88,18 @@ class EmployerPage extends React.Component {
         this.props.UserActions.signOut();
     }
 
+    clearLocalState() {
+        this.setState({
+            currentSection: "cultureFit",
+            watched: false,
+            newEmployerVideo: false,
+            openStream: null
+        });
+    }
+
     render() {
-        let currentSection;
+        let currentSection, streamObject;
+        if (this.state.openStream) streamObject = this.state.openStream;
         if (this.state.currentSection === "details") currentSection = <EmployerPagePresentation />;
         if (this.state.currentSection === "cultureFit") currentSection = (
             <CultureFitSection respondToQuestion={this.respondToQuestion}
@@ -81,8 +110,9 @@ class EmployerPage extends React.Component {
             <AnswerVideoSection beginQuestion={this.beginQuestion} fetchedLink={this.props.videoQuestion}
                                 currentSection={this.state.currentSection} videoLink={this.state.videoLink}
                                 watchQuestion={this.watchQuestion} watched={this.state.watched}
-                                initiateResponse={this.initiateResponse} streamObject={this.props.streamObject}
-                                userId={this.props.userId} jobId={this.props.jobId}/>
+                                initiateResponse={this.initiateResponse} streamObject={streamObject}
+                                userId={this.props.userId} jobId={this.props.jobId}
+                                clearLocalState={this.clearLocalState}/>
         );
         
         if (this.props.videoQuestion && this.props.employer) currentSection = (
@@ -90,13 +120,14 @@ class EmployerPage extends React.Component {
         );
         if (this.props.employer && this.state.newEmployerVideo) currentSection = (
             <EmployerVideoSection getPermission={this.initiateResponse} newVideo={this.state.newEmployerVideo}
-                                  streamObject={this.props.streamObject} fetchedLink={this.props.videoQuestion}
+                                  streamObject={streamObject} fetchedLink={this.props.videoQuestion}
                                   employerId={this.props.employerId} jobId={this.props.jobId}
-                                  watchQuestion={this.watchQuestion}/>
+                                  watchQuestion={this.watchQuestion} clearLocalState={this.clearLocalState}/>
         );
         return (
             <div>
-                <NavbarPresentation signOut={this.signOut}
+                <NavbarPresentation employer={this.props.employer}
+                                    signOut={this.signOut}
                                     activeUser={this.props.activeUserBool}/>
                 <div className="headerStyle"></div>
                 <div style={{marginTop: "2%"}} className="container">
@@ -134,9 +165,8 @@ EmployerPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
     let currentEmployerPage, interviewQuestion, videoQuestion,
-        streamObject, employerId, userId, employer, videoResponse;
+        employerId, userId, employer, videoResponse;
     if (state.activeUser && state.activeUser.employer) employerId = state.activeUser._id;
-    if (state.webcamAndVideo && state.webcamAndVideo.openStream) streamObject = state.webcamAndVideo.openStream;
     if (state.webcamAndVideo && state.webcamAndVideo.fetchedLink) videoQuestion = state.webcamAndVideo.fetchedLink;
     if (state.jobListings && state.jobListings.currentEmployerPage) currentEmployerPage = state.jobListings.currentEmployerPage;
     if (currentEmployerPage && currentEmployerPage.videoQuestions) interviewQuestion = currentEmployerPage.videoQuestions;
@@ -148,7 +178,6 @@ function mapStateToProps(state, ownProps) {
         currentEmployerPage,
         interviewQuestion,
         videoQuestion,
-        streamObject,
         videoResponse,
         userId,
         employer,

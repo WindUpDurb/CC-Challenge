@@ -17,7 +17,7 @@ export const generateRoutes = (store) => {
             <Route path="/home" component={HomePage} />
             <Route path="/dashboard" component={DashboardPage} />
             <Route path="/employerDashboard" component={EmployerDashboardPage} />
-            <Route path="/employerDashboard/upload/:positionId" component={UploadVideoPage} />
+            <Route path="/employerDashboard/employer/:employer" component={EmployerPage} />
             <Route path="/dashboard/employer/:employer" component={EmployerPage} />
         </Route>
     );

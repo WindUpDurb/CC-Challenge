@@ -36,6 +36,12 @@ export function dispatchAWSLink(link) {
     };
 }
 
+export function dispatchStopStream() {
+    return {
+        type: types.STOP_STREAM
+    }
+}
+
 export function closeStream() {
     return function (dispatch) {
         dispatch(dispatchCloseStream());
@@ -85,5 +91,11 @@ export function requestWebcamPermissionAndOpen() {
             .catch(error => {
                 console.log("Error: ", error);
             });
+    };
+}
+
+export function updateStream(stream) {
+    return function (dispatch) {
+        dispatch(dispatchStreamObject(stream));
     };
 }

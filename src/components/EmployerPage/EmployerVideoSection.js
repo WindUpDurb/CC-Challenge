@@ -3,10 +3,10 @@
 import React, {PropTypes} from "react";
 import UploadVideoComponent from "../common/UploadVideoComponent";
 
-export const EmployerVideoSection = ({newVideo, employerId, jobId, watchQuestion, streamObject, fetchedLink}) => {
+export const EmployerVideoSection = ({newVideo, clearLocalState, employerId, jobId, watchQuestion, streamObject, fetchedLink}) => {
     let uploadVideo;
     if (streamObject && newVideo) {
-        uploadVideo = <UploadVideoComponent employerId={employerId} jobId={jobId}/>;
+        uploadVideo = <UploadVideoComponent clearLocalState={clearLocalState} streamObject={streamObject} employerId={employerId} jobId={jobId}/>;
     }
 
     if (!newVideo && fetchedLink) {
@@ -58,5 +58,6 @@ EmployerVideoSection.propTypes = {
     employerId: PropTypes.string,
     jobId: PropTypes.string,
     newVideo: PropTypes.bool,
-    streamObject: PropTypes.object
+    streamObject: PropTypes.object,
+    watchQuestion: PropTypes.func
 };

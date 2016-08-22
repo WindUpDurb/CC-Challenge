@@ -95,6 +95,7 @@ class DashboardPage extends React.Component {
         return (
             <div>
                 <NavbarPresentation
+                    employer={this.props.employer}
                     signOut={this.signOut}
                     activeUser={this.props.activeUserBool}/>
                 <DashboardHeader 
@@ -118,6 +119,7 @@ DashboardPage.propTypes = {
     UserActions: PropTypes.object,
     jobListings: PropTypes.array,
     activeUserBool: PropTypes.bool,
+    employer: PropTypes.bool,
     activeUser: PropTypes.object
 };
 
@@ -129,6 +131,7 @@ function mapStateToProps(state, ownProps) {
     return {
         jobListings,
         activeUserBool: !!state.activeUser,
+        employer: !!state.activeUser && !!state.activeUser.employer,
         activeUser
     };
 }
@@ -136,7 +139,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         JobListActions: bindActionCreators(JobListActions, dispatch),
-        BlogResourcesActions: bindActionCreators(BlogResourcesActions, dispatch),
+        //BlogResourcesActions: bindActionCreators(BlogResourcesActions, dispatch),
         UserActions: bindActionCreators(UserActions, dispatch)
     };
 }

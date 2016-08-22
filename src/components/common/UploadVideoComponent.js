@@ -94,9 +94,11 @@ class UploadVideoComponent extends React.Component {
     uploadToAWS() {
         if (this.props.employerId) {
             this.props.ServerActions.uploadToAWS(this.state.blobToUpload, this.props.jobId, this.props.employerId);
+            this.props.clearLocalState();
         }
         if (this.props.userId) {
             this.props.ServerActions.uploadToAWSUser(this.state.blobToUpload, this.props.jobId, this.props.userId);
+            this.props.clearLocalState();
         }
     }
 
@@ -151,16 +153,18 @@ UploadVideoComponent.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-    let streamingObject, employerId, jobId, userId;
-    if (state.webcamAndVideo && state.webcamAndVideo.openStream) streamingObject = state.webcamAndVideo.openStream;
+    let streamingObject, employerId, jobId, userId, clearLocalState;
+    if (ownProps.streamObject) streamingObject = ownProps.streamObject;
     if (ownProps.employerId) employerId = ownProps.employerId;
     if (ownProps.jobId) jobId = ownProps.jobId;
     if (ownProps.userId) userId = ownProps.userId;
+    if (ownProps.clearLocalState) clearLocalState = ownProps.clearLocalState;
     return {
         streamingObject,
         jobId,
         employerId,
-        userId
+        userId,
+        clearLocalState
     };
 }
 

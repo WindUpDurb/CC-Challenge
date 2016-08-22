@@ -15,6 +15,8 @@ export const JOB_DATA_RECEIVED = "GOT_THE_JOB";
 
 export const EMPLOYER_PAGE_RECEIVED = "WE_GOT_THE_JOB";
 
+export const STOP_STREAM = "STOPPING_STREAM";
+
 export const STREAM_OBJECT_CREATED = "AND_WE_ARE_LIVE";
 export const STREAM_CLOSE = "AND_WE_ARE_CLOSED";
 export const AWS_LINK_RECEIVED = "GOT_THE_LINK";

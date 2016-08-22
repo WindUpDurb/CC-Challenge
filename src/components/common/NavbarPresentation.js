@@ -48,7 +48,7 @@ export const NavbarPresentation = ({toggleSignIn, employer, signOut, activeUser}
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav navbar-right">
-                            <li><Link to="dashboard">My Dashboard</Link></li>
+                            <li><Link to="/dashboard">My Dashboard</Link></li>
                             <li><a className="pointer" onClick={signOut}>Sign Out </a></li>
                         </ul>
                     </div>
@@ -74,7 +74,7 @@ export const NavbarPresentation = ({toggleSignIn, employer, signOut, activeUser}
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav navbar-right">
-                            <li><Link to="employerDashboard">Employer Dashboard</Link></li>
+                            <li><Link to="/employerDashboard">Employer Dashboard</Link></li>
                             <li><a className="pointer" onClick={signOut}>Sign Out </a></li>
                         </ul>
                     </div>

@@ -57,12 +57,12 @@ let Employer = mongoose.model("Employer", employerSchema);
     name: "Dr. John Doe",
     jobs: [
         {
-            jobId: "57b728c41fbcbbb20343b634",
+            jobId: "57b9fa82e131b0cc274c1c5b",
             jobTitle: "Optometrist",
             organization: "Optix Family Eye Care"
         },
         {
-            jobId: "57b728c41fbcbbb20343b635",
+            jobId: "57b9fa82e131b0cc274c1c5c",
             jobTitle: "Optician",
             organization: "Optix Family Eye Care"
         }
